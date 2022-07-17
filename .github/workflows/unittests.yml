@@ -13,4 +13,4 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - name: Run tests with unittest
-        run: pytest
+        run: python -m unittest discover
