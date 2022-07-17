@@ -389,7 +389,6 @@ class Interpreter:
         res = RTResult()
         break_ = res.register(cls.visit(node.try_statements, context))
         broken = bool(res.should_return())
-        error = res.should_return().as_string()
         if broken:
             break_ = res.register(cls.visit(node.except_statements, context))
             if res.should_return():
