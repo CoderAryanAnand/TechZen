@@ -19,8 +19,8 @@ class TestLexer(unittest.TestCase):
         self.assertEqual(tokens, "[[INT:123, FLOAT:123.456, FLOAT:123.0, DOT, INT:456, DOT, EOF], None]")
 
     def test_operators(self):
-        tokens = str(list(Lexer("<stdin>", "+-*/").make_tokens()))
-        self.assertEqual(tokens, "[[PLUS, MINUS, DIV, EOF], None]")
+        tokens = str(list(Lexer("<stdin>", "+-*/%//").make_tokens()))
+        self.assertEqual(tokens, "[[PLUS, MINUS, DIV, MOD, DFL, EOF], None]")
 
     def test_parens(self):
         tokens = str(list(Lexer("<stdin>", "()").make_tokens()))
