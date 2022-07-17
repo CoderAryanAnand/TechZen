@@ -1,0 +1,7 @@
+try
+var a = asdf2
+except
+var a = 3
+end
+
+print(a)

@@ -1,0 +1,31 @@
+
+print("This is a quiz coded in TechZen")
+
+var answer = input("Are you ready to play? (yes/no)")
+
+var answer = lower_string(answer)
+print(answer)
+
+var total_questions = 1
+
+fun q1 ()
+    var answer = input("Q1: What is your favourite programming language?")
+    var score = 0
+    if lower_string(answer) == "python" then
+        var score = score + 1
+        print("Correct")
+        return score
+    else
+        print("Wrong")
+    end
+end
+
+if answer == "yes" then
+    var score = q1()
+else
+    PRINT("Sorry to hear that.")
+end
+
+var percent = score / total_questions * 100
+
+print(string(percent) + "% is your score.")

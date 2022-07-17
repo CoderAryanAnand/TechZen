@@ -1,0 +1,20 @@
+var a = 1
+
+class Person
+    fun Person(name)
+        VAR this.name = name
+    end
+    fun Format()
+        RETURN "My name is " + this.name + "."
+    end
+end
+
+var inp = input("name: ")
+while inp != "exit" then
+	var p = Person(inp)
+	print(p.Format())
+	var inp = input("name: ")
+end
+
+exit()
+print("This message will never ever show up! Isn't that wacky?!")
