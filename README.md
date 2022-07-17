@@ -4,6 +4,7 @@
 ![repository size](https://img.shields.io/github/repo-size/CoderAryanAnand/TechZen)
 ![files](https://img.shields.io/github/directory-file-count/CoderAryanAnand/TechZen)
 ![issues](https://img.shields.io/github/issues/CoderAryanAnand/TechZen)
+![example workflow](https://github.com/CoderAryanAnand/TechZen/actions/workflows/unittests.yml/badge.svg)
 ![license](https://img.shields.io/github/license/CoderAryanAnand/TechZen)
 
 
