@@ -1,0 +1,18 @@
+
+fun add(a, b) -> a + b
+var res = add(1, 2)
+print(res)
+
+
+fun subtract(a, b)
+    var res = a - b
+    return res
+end
+
+print(subtract(2,1))
+
+fun hi()
+print("hi")
+end
+
+hi()

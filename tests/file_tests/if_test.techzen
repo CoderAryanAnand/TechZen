@@ -1,0 +1,15 @@
+if TRUE then
+    print("a")
+end
+
+if FALSE then
+    print("b")
+elif TRUE then
+    print("a")
+end
+
+if FALSE then
+    print("b")
+else
+    print("a")
+end

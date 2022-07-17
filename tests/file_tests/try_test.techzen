@@ -1,0 +1,17 @@
+try
+var a = 11
+print(a)
+except
+var a = 12
+print(a)
+end
+
+
+try
+vasdfasdfar a = 11
+print(a)
+except
+var a = 12
+print(a)
+end
+

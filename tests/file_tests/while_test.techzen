@@ -1,0 +1,6 @@
+var a = 1
+
+while a == 1 then
+print("a")
+var a = 2
+end
