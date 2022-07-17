@@ -1,8 +1,15 @@
 import unittest
-from TechZen.token_ import Token, TokenType
+
+import sys
+import os
+
+current_file = os.path.realpath(__file__)
+current_dir_tests = os.path.dirname(current_file)
+parent_dir_parent_directory = os.path.dirname(current_dir_tests)
+sys.path.insert(0, parent_dir_parent_directory)
+
 from TechZen.lexer_ import Lexer
 from TechZen.parser_ import Parser
-from TechZen.nodes_ import *
 
 
 class TestParser(unittest.TestCase):

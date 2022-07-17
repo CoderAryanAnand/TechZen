@@ -1,9 +1,16 @@
 import unittest
-from TechZen.nodes_ import *
+
+import sys
+import os
+
+current_file = os.path.realpath(__file__)
+current_dir_tests = os.path.dirname(current_file)
+parent_dir_parent_directory = os.path.dirname(current_dir_tests)
+sys.path.insert(0, parent_dir_parent_directory)
+
 from TechZen.lexer_ import Lexer
 from TechZen.parser_ import Parser
 from TechZen.interpreter_ import Interpreter
-from TechZen.types.number_ import Number
 
 from TechZen.global_symbol_table_ import global_symbol_table
 from TechZen.context_ import Context
@@ -53,7 +60,7 @@ class TestInterpreter(unittest.TestCase):
         result = Interpreter().visit(
             Parser(
                 Lexer("<stdin>",
-                      "run('file_tests/variable_test.techzen')").make_tokens()[0]).parse().node, context).value
+                      "run('tests/file_tests/variable_test.techzen')").make_tokens()[0]).parse().node, context).value
 
         self.assertEqual(str(result), "0")
 
@@ -61,7 +68,7 @@ class TestInterpreter(unittest.TestCase):
         result = Interpreter().visit(
             Parser(
                 Lexer("<stdin>",
-                      "run('file_tests/if_test.techzen')").make_tokens()[0]).parse().node, context).value
+                      "run('tests/file_tests/if_test.techzen')").make_tokens()[0]).parse().node, context).value
 
         self.assertEqual(str(result), "0")
 
@@ -69,7 +76,7 @@ class TestInterpreter(unittest.TestCase):
         result = Interpreter().visit(
             Parser(
                 Lexer("<stdin>",
-                      "run('file_tests/for_test.techzen')").make_tokens()[0]).parse().node, context).value
+                      "run('tests/file_tests/for_test.techzen')").make_tokens()[0]).parse().node, context).value
 
         self.assertEqual(str(result), "0")
 
@@ -77,7 +84,7 @@ class TestInterpreter(unittest.TestCase):
         result = Interpreter().visit(
             Parser(
                 Lexer("<stdin>",
-                      "run('file_tests/while_test.techzen')").make_tokens()[0]).parse().node, context).value
+                      "run('tests/file_tests/while_test.techzen')").make_tokens()[0]).parse().node, context).value
 
         self.assertEqual(str(result), "0")
 
@@ -85,7 +92,7 @@ class TestInterpreter(unittest.TestCase):
         result = Interpreter().visit(
             Parser(
                 Lexer("<stdin>",
-                      "run('file_tests/function_test.techzen')").make_tokens()[0]).parse().node, context).value
+                      "run('tests/file_tests/function_test.techzen')").make_tokens()[0]).parse().node, context).value
 
         self.assertEqual(str(result), "0")
 
@@ -93,7 +100,7 @@ class TestInterpreter(unittest.TestCase):
         result = Interpreter().visit(
             Parser(
                 Lexer("<stdin>",
-                      "run('file_tests/class_test.techzen')").make_tokens()[0]).parse().node, context).value
+                      "run('tests/file_tests/class_test.techzen')").make_tokens()[0]).parse().node, context).value
 
         self.assertEqual(str(result), "0")
 
@@ -101,6 +108,6 @@ class TestInterpreter(unittest.TestCase):
         result = Interpreter().visit(
             Parser(
                 Lexer("<stdin>",
-                      "run('file_tests/try_test.techzen')").make_tokens()[0]).parse().node, context).value
+                      "run('tests/file_tests/try_test.techzen')").make_tokens()[0]).parse().node, context).value
 
         self.assertEqual(str(result), "0")
