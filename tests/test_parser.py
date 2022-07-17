@@ -85,3 +85,23 @@ class TestParser(unittest.TestCase):
         node = Parser(Lexer("<stdin>", "{}").make_tokens()[0]).parse().node
         self.assertEqual(str(node.element_nodes[0])[:35],
                          "<TechZen.nodes_.DictNode object at ")
+
+    def test_continue(self):
+        node = Parser(Lexer("<stdin>", "continue").make_tokens()[0]).parse().node
+        self.assertEqual(str(node.element_nodes[0])[:39],
+                         "<TechZen.nodes_.ContinueNode object at ")
+
+    def test_break(self):
+        node = Parser(Lexer("<stdin>", "break").make_tokens()[0]).parse().node
+        self.assertEqual(str(node.element_nodes[0])[:36],
+                         "<TechZen.nodes_.BreakNode object at ")
+
+    def test_return(self):
+        node = Parser(Lexer("<stdin>", "return").make_tokens()[0]).parse().node
+        self.assertEqual(str(node.element_nodes[0])[:37],
+                         "<TechZen.nodes_.ReturnNode object at ")
+
+    def test_call(self):
+        node = Parser(Lexer("<stdin>", "print()").make_tokens()[0]).parse().node
+        self.assertEqual(str(node.element_nodes[0])[:35],
+                         "<TechZen.nodes_.CallNode object at ")
