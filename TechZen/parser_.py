@@ -1107,7 +1107,6 @@ class Parser:
     def try_expr(self):
         res = ParseResult()
         pos_start = self.current_token.pos_start
-        error = None
 
         if not self.current_token.matches(TokenType.TT_KEYWORD, Keywords.KW_TRY.value):
             return res.failure(

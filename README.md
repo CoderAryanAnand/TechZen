@@ -7,29 +7,37 @@
 ![workflow](https://github.com/CoderAryanAnand/TechZen/actions/workflows/unittests.yml/badge.svg)
 ![license](https://img.shields.io/github/license/CoderAryanAnand/TechZen)
 
-
 # TechZen
 TechZen is a dynamically typed language, similar to [BASIC](https://en.wikipedia.org/wiki/BASIC), coded and interpreted in [Python 3](https://www.python.org).
 
 ## Features
 
 - Variables
+
 - Types
-  - Integers
-  - Floats
-  - Strings
-  - Lists
-  - Dictionaries
-  - Booleans
+    - Integers
+    - Floats
+    - Strings
+    - Lists
+    - Dictionaries
+    - Booleans
+
 - Numerical Operators
+
 - Conditional Operators
+
 - If Statements
+
 - For Statements
+
 - While Statements
+
 - Functions
-  - Built-in Functions
+    - Built-in Functions
+
 - Classes
-  - Instances
+    - Instances
+
 - Errors
 
 ## Prerequisites

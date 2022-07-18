@@ -1,4 +1,3 @@
-from TechZen.lexer_ import Lexer
 from TechZen.parser_ import Parser
 from TechZen.interpreter_ import Interpreter
 from TechZen.context_ import Context

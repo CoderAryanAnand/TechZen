@@ -450,10 +450,10 @@ class Interpreter:
     @classmethod
     def visit_TryNode(cls, node, context):
         res = RTResult()
-        break_ = res.register(cls.visit(node.try_statements, context))
+        _ = res.register(cls.visit(node.try_statements, context))
         broken = bool(res.should_return())
         if broken:
-            break_ = res.register(cls.visit(node.except_statements, context))
+            _ = res.register(cls.visit(node.except_statements, context))
             if res.should_return():
                 return res
         return res.success(Number.null)
