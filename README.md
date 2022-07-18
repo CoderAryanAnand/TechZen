@@ -1,6 +1,6 @@
 <img alt="TechZen Logo" height="171" src="./images_for_github/TechZenLogo.png" title="TechZen Logo"/>
 
-![codacy](https://img.shields.io/codacy/grade/f87f19a6d07146f2b6a37c0a284af5b4)
+[![Codacy Badge](https://app.codacy.com/project/badge/Grade/4e78847b0b244b2db71fe12e892e4d56)](https://www.codacy.com/gh/CoderAryanAnand/TechZen/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=CoderAryanAnand/TechZen&amp;utm_campaign=Badge_Grade)
 ![repository size](https://img.shields.io/github/repo-size/CoderAryanAnand/TechZen)
 ![files](https://img.shields.io/github/directory-file-count/CoderAryanAnand/TechZen)
 ![issues](https://img.shields.io/github/issues/CoderAryanAnand/TechZen)
