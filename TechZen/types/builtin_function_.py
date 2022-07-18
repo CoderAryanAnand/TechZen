@@ -14,7 +14,6 @@ Number.true = Number(1)
 
 
 class BuiltInFunction(BaseFunction):
-
     def __init__(self, name):
         super().__init__(name)
 
@@ -22,7 +21,7 @@ class BuiltInFunction(BaseFunction):
         res = RTResult()
         exec_ctx = self.generate_new_context()
 
-        method_name = f'execute_{self.name}'
+        method_name = f"execute_{self.name}"
         method = getattr(self, method_name, self.no_visit_method)
 
         res.register(self.check_and_populate_args(method.arg_names, args, exec_ctx))
@@ -36,7 +35,7 @@ class BuiltInFunction(BaseFunction):
         return res.success(return_value)
 
     def no_visit_method(self, node, context):
-        raise Exception(f'No execute_{self.name} method defined')
+        raise Exception(f"No execute_{self.name} method defined")
 
     def copy(self):
         copy = BuiltInFunction(self.name)
@@ -45,28 +44,28 @@ class BuiltInFunction(BaseFunction):
         return copy
 
     def __repr__(self):
-        return f'<built-in function {self.name}>'
+        return f"<built-in function {self.name}>"
 
     def execute_print(self, exec_ctx):
-        print(exec_ctx.symbol_table.get('value'))
+        print(exec_ctx.symbol_table.get("value"))
         return RTResult().success(Number.null)
 
-    execute_print.arg_names = ['value']
+    execute_print.arg_names = ["value"]
 
     def execute_print_ret(self, exec_ctx):
-        return RTResult().success(String(str(exec_ctx.symbol_table.get('value'))))
+        return RTResult().success(String(str(exec_ctx.symbol_table.get("value"))))
 
-    execute_print_ret.arg_names = ['value']
+    execute_print_ret.arg_names = ["value"]
 
     def execute_input(self, exec_ctx):
-        question = exec_ctx.symbol_table.get('value') or None
+        question = exec_ctx.symbol_table.get("value") or None
         text = input(question)
         return RTResult().success(String(text))
 
     execute_input.arg_names = ["value"]
 
     def execute_input_int(self, exec_ctx):
-        question = exec_ctx.symbol_table.get('value') or None
+        question = exec_ctx.symbol_table.get("value") or None
         while True:
             text = input(question)
             try:
@@ -79,7 +78,7 @@ class BuiltInFunction(BaseFunction):
     execute_input_int.arg_names = ["value"]
 
     def execute_clear(self, exec_ctx):
-        os.system('cls' if os.name == 'nt' else 'cls')
+        os.system("cls" if os.name == "nt" else "cls")
         return RTResult().success(Number.null)
 
     execute_clear.arg_names = []
@@ -113,11 +112,14 @@ class BuiltInFunction(BaseFunction):
         value = exec_ctx.symbol_table.get("value")
 
         if not isinstance(list_, List):
-            return RTResult().failure(RTError(
-                self.pos_start, self.pos_end,
-                "First argument must be list",
-                exec_ctx
-            ))
+            return RTResult().failure(
+                RTError(
+                    self.pos_start,
+                    self.pos_end,
+                    "First argument must be list",
+                    exec_ctx,
+                )
+            )
 
         list_.elements.append(value)
         return RTResult().success(Number.null)
@@ -129,27 +131,36 @@ class BuiltInFunction(BaseFunction):
         index = exec_ctx.symbol_table.get("index")
 
         if not isinstance(list_, List):
-            return RTResult().failure(RTError(
-                self.pos_start, self.pos_end,
-                "First argument must be list",
-                exec_ctx
-            ))
+            return RTResult().failure(
+                RTError(
+                    self.pos_start,
+                    self.pos_end,
+                    "First argument must be list",
+                    exec_ctx,
+                )
+            )
 
         if not isinstance(index, Number):
-            return RTResult().failure(RTError(
-                self.pos_start, self.pos_end,
-                "Second argument must be number",
-                exec_ctx
-            ))
+            return RTResult().failure(
+                RTError(
+                    self.pos_start,
+                    self.pos_end,
+                    "Second argument must be number",
+                    exec_ctx,
+                )
+            )
 
         try:
             element = list_.elements.pop(index.value)
         except IndexError:
-            return RTResult().failure(RTError(
-                self.pos_start, self.pos_end,
-                'Element at this index could not be removed from list because index is out of bounds',
-                exec_ctx
-            ))
+            return RTResult().failure(
+                RTError(
+                    self.pos_start,
+                    self.pos_end,
+                    "Element at this index could not be removed from list because index is out of bounds",
+                    exec_ctx,
+                )
+            )
         return RTResult().success(element)
 
     execute_pop.arg_names = ["list", "index"]
@@ -159,18 +170,24 @@ class BuiltInFunction(BaseFunction):
         list_b = exec_ctx.symbol_table.get("listB")
 
         if not isinstance(list_a, List):
-            return RTResult().failure(RTError(
-                self.pos_start, self.pos_end,
-                "First argument must be list",
-                exec_ctx
-            ))
+            return RTResult().failure(
+                RTError(
+                    self.pos_start,
+                    self.pos_end,
+                    "First argument must be list",
+                    exec_ctx,
+                )
+            )
 
         if not isinstance(list_b, List):
-            return RTResult().failure(RTError(
-                self.pos_start, self.pos_end,
-                "Second argument must be list",
-                exec_ctx
-            ))
+            return RTResult().failure(
+                RTError(
+                    self.pos_start,
+                    self.pos_end,
+                    "Second argument must be list",
+                    exec_ctx,
+                )
+            )
 
         list_a.elements.extend(list_b.elements)
         return RTResult().success(Number.null)
@@ -183,27 +200,33 @@ class BuiltInFunction(BaseFunction):
         replacement = exec_ctx.symbol_table.get("replacement")
 
         if not isinstance(list_, List):
-            return RTResult().failure(RTError(
-                self.pos_start, self.pos_end,
-                "First argument must be list",
-                exec_ctx
-            ))
+            return RTResult().failure(
+                RTError(
+                    self.pos_start,
+                    self.pos_end,
+                    "First argument must be list",
+                    exec_ctx,
+                )
+            )
 
         if not isinstance(idx, Number):
-            return RTResult().failure(RTError(
-                self.pos_start, self.pos_end,
-                "Second argument must be number",
-                exec_ctx
-            ))
+            return RTResult().failure(
+                RTError(
+                    self.pos_start,
+                    self.pos_end,
+                    "Second argument must be number",
+                    exec_ctx,
+                )
+            )
 
         try:
             list_.elements[idx.value] = replacement
         except IndexError:
-            return RTResult().failure(RTError(
-                self.pos_start, self.pos_end,
-                "Index is out of bounds",
-                exec_ctx
-            ))
+            return RTResult().failure(
+                RTError(
+                    self.pos_start, self.pos_end, "Index is out of bounds", exec_ctx
+                )
+            )
         return RTResult().success(List(list_.elements))
 
     execute_update_list.arg_names = ["list", "index", "replacement"]
@@ -212,11 +235,9 @@ class BuiltInFunction(BaseFunction):
         list_ = exec_ctx.symbol_table.get("list")
 
         if not isinstance(list_, List):
-            return RTResult().failure(RTError(
-                self.pos_start, self.pos_end,
-                "Argument must be list",
-                exec_ctx
-            ))
+            return RTResult().failure(
+                RTError(self.pos_start, self.pos_end, "Argument must be list", exec_ctx)
+            )
         return RTResult().success(Number(len(list_.elements)))
 
     execute_len.arg_names = ["list"]
@@ -225,11 +246,11 @@ class BuiltInFunction(BaseFunction):
         string_ = exec_ctx.symbol_table.get("value")
 
         if not isinstance(string_, String):
-            return RTResult().failure(RTError(
-                self.pos_start, self.pos_end,
-                "Argument must be string",
-                exec_ctx
-            ))
+            return RTResult().failure(
+                RTError(
+                    self.pos_start, self.pos_end, "Argument must be string", exec_ctx
+                )
+            )
         return RTResult().success(String(string_.value.lower()))
 
     execute_lower.arg_names = ["value"]
@@ -238,11 +259,11 @@ class BuiltInFunction(BaseFunction):
         string_ = exec_ctx.symbol_table.get("value")
 
         if not isinstance(string_, String):
-            return RTResult().failure(RTError(
-                self.pos_start, self.pos_end,
-                "Argument must be string",
-                exec_ctx
-            ))
+            return RTResult().failure(
+                RTError(
+                    self.pos_start, self.pos_end, "Argument must be string", exec_ctx
+                )
+            )
         return RTResult().success(String(string_.value.upper()))
 
     execute_upper.arg_names = ["value"]
@@ -251,11 +272,11 @@ class BuiltInFunction(BaseFunction):
         integer_ = exec_ctx.symbol_table.get("value")
 
         if not isinstance(integer_, Number):
-            return RTResult().failure(RTError(
-                self.pos_start, self.pos_end,
-                "Argument must be string",
-                exec_ctx
-            ))
+            return RTResult().failure(
+                RTError(
+                    self.pos_start, self.pos_end, "Argument must be string", exec_ctx
+                )
+            )
         return RTResult().success(String(str(integer_.value)))
 
     execute_string.arg_names = ["value"]
@@ -264,11 +285,11 @@ class BuiltInFunction(BaseFunction):
         fn = exec_ctx.symbol_table.get("fn")
 
         if not isinstance(fn, String):
-            return RTResult().failure(RTError(
-                self.pos_start, self.pos_end,
-                "Argument must be string",
-                exec_ctx
-            ))
+            return RTResult().failure(
+                RTError(
+                    self.pos_start, self.pos_end, "Argument must be string", exec_ctx
+                )
+            )
 
         fn = fn.value
 
@@ -276,15 +297,26 @@ class BuiltInFunction(BaseFunction):
             with open(fn, "r") as f:
                 script = f.read()
         except Exception as e:
-            return RTResult().failure(RTError(self.pos_start, self.pos_end, f"Failed to load script \"{fn}\"\n{e}",
-                                              exec_ctx))
+            return RTResult().failure(
+                RTError(
+                    self.pos_start,
+                    self.pos_end,
+                    f'Failed to load script "{fn}"\n{e}',
+                    exec_ctx,
+                )
+            )
 
         _, error, should_exit = Runner.run(fn, script)
 
         if error:
-            return RTResult().failure(RTError(self.pos_start, self.pos_end,
-                                              f"Failed to finish executing script \"{fn}\"\n{error.as_string()}",
-                                              exec_ctx))
+            return RTResult().failure(
+                RTError(
+                    self.pos_start,
+                    self.pos_end,
+                    f'Failed to finish executing script "{fn}"\n{error.as_string()}',
+                    exec_ctx,
+                )
+            )
 
         if should_exit:
             return RTResult().success_exit(Number.null)

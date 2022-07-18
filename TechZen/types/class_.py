@@ -19,16 +19,21 @@ class Class(Value):
 
         value = self.symbol_table.get(other.value)
         if not value:
-            return None, RTError(
-                self.pos_start, self.pos_end,
-                f"'{other.value}' is not defined",
-                self.context
+            return (
+                None,
+                RTError(
+                    self.pos_start,
+                    self.pos_end,
+                    f"'{other.value}' is not defined",
+                    self.context,
+                ),
             )
 
         return value, None
 
     def execute(self, args):
         from TechZen.types.function_ import Function
+
         res = RTResult()
 
         exec_ctx = Context(self.name, self.context, self.pos_start)
@@ -43,23 +48,32 @@ class Class(Value):
         for name in inst.symbol_table.symbols:
             inst.symbol_table.symbols[name].set_context(exec_ctx)
 
-        inst.symbol_table.set('this', inst)
-        inst.symbol_table.set('self', inst)
+        inst.symbol_table.set("this", inst)
+        inst.symbol_table.set("self", inst)
 
-        method = inst.symbol_table.symbols[self.name] if self.name in inst.symbol_table.symbols else None
+        method = (
+            inst.symbol_table.symbols[self.name]
+            if self.name in inst.symbol_table.symbols
+            else None
+        )
 
         if method is None or not isinstance(method, Function):
-            return res.failure(RTError(
-                self.pos_start, self.pos_end,
-                f"Function '{self.name}' not defined",
-                self.context
-            ))
+            return res.failure(
+                RTError(
+                    self.pos_start,
+                    self.pos_end,
+                    f"Function '{self.name}' not defined",
+                    self.context,
+                )
+            )
 
         res.register(method.execute(args))
         if res.should_return():
             return res
 
-        return res.success(inst.set_context(self.context).set_pos(self.pos_start, self.pos_end))
+        return res.success(
+            inst.set_context(self.context).set_pos(self.pos_start, self.pos_end)
+        )
 
     def copy(self):
         return self

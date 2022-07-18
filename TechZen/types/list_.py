@@ -4,7 +4,6 @@ from TechZen.errors_ import RTError
 
 
 class List(Value):
-
     def __init__(self, elements):
         super().__init__()
         self.elements = elements
@@ -29,9 +28,16 @@ class List(Value):
             new_list.elements.pop(other.value)
             return new_list, None
         except IndexError:
-            return None, RTError(other.pos_start, other.pos_end, "Element at this index could not be removed from"
-                                                                 "list, because index is out of bounds",
-                                 self.context)
+            return (
+                None,
+                RTError(
+                    other.pos_start,
+                    other.pos_end,
+                    "Element at this index could not be removed from"
+                    "list, because index is out of bounds",
+                    self.context,
+                ),
+            )
 
     def dived_by(self, other):
         if not isinstance(other, Number):
@@ -39,9 +45,16 @@ class List(Value):
         try:
             return self.elements[other.value], None
         except IndexError:
-            return None, RTError(other.pos_start, other.pos_end, "Element at this index could not be retrieved from"
-                                                                 "list, because index is out of bounds",
-                                 self.context)
+            return (
+                None,
+                RTError(
+                    other.pos_start,
+                    other.pos_end,
+                    "Element at this index could not be retrieved from"
+                    "list, because index is out of bounds",
+                    self.context,
+                ),
+            )
 
     def copy(self):
         copy = List(self.elements)

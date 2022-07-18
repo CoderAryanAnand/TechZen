@@ -2,8 +2,8 @@
 # RUNTIME RESULT
 #######################################
 
-class RTResult:
 
+class RTResult:
     def __init__(self):
         self.reset()
 
@@ -55,5 +55,10 @@ class RTResult:
         return self
 
     def should_return(self):
-        return self.error or \
-               self.func_return_value or self.loop_should_continue or self.loop_should_break or self.should_exit
+        return (
+            self.error
+            or self.func_return_value
+            or self.loop_should_continue
+            or self.loop_should_break
+            or self.should_exit
+        )

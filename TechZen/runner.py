@@ -9,6 +9,7 @@ class Runner:
     def run(fn, text):
         from TechZen.global_symbol_table_ import global_symbol_table
         from TechZen.lexer_ import Lexer
+
         # Generate tokens
         lexer = Lexer(fn, text)
         tokens, error = lexer.make_tokens()
@@ -23,7 +24,7 @@ class Runner:
 
         # Run program
         interpreter = Interpreter()
-        context = Context('<program>')
+        context = Context("<program>")
         context.symbol_table = global_symbol_table
         result = interpreter.visit(ast.node, context)
 

@@ -68,7 +68,7 @@ class Value:
         return RTResult().failure(self.illegal_operation())
 
     def copy(self):
-        raise Exception('No copy method defined')
+        raise Exception("No copy method defined")
 
     @staticmethod
     def is_true():
@@ -77,8 +77,4 @@ class Value:
     def illegal_operation(self, other=None):
         if not other:
             other = self
-        return RTError(
-            self.pos_start, other.pos_end,
-            'Illegal operation',
-            self.context
-        )
+        return RTError(self.pos_start, other.pos_end, "Illegal operation", self.context)

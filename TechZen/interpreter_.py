@@ -16,22 +16,31 @@ Number.true = Number(1)
 class Interpreter:
     @classmethod
     def visit(cls, node, context):
-        method_name = f'visit_{type(node).__name__}'
+        method_name = f"visit_{type(node).__name__}"
         method = getattr(cls, method_name, cls.no_visit_method)
         return method(node, context)
 
     @classmethod
     def no_visit_method(cls, node, context):
-        raise Exception(f'No visit_{type(node).__name__} method defined')
+        raise Exception(f"No visit_{type(node).__name__} method defined")
 
     @classmethod
     def visit_NumberNode(cls, node, context):
-        return RTResult().success(Number(node.token.value).set_context(context).set_pos(node.pos_start, node.pos_end))
+        return RTResult().success(
+            Number(node.token.value)
+            .set_context(context)
+            .set_pos(node.pos_start, node.pos_end)
+        )
 
     @classmethod
     def visit_StringNode(cls, node, context):
         from TechZen.types.string_ import String
-        return RTResult().success(String(node.token.value).set_context(context).set_pos(node.pos_start, node.pos_end))
+
+        return RTResult().success(
+            String(node.token.value)
+            .set_context(context)
+            .set_pos(node.pos_start, node.pos_end)
+        )
 
     @classmethod
     def visit_ListNode(cls, node, context):
@@ -43,11 +52,14 @@ class Interpreter:
             if res.should_return():
                 return res
 
-        return res.success(List(elements).set_context(context).set_pos(node.pos_start, node.pos_end))
+        return res.success(
+            List(elements).set_context(context).set_pos(node.pos_start, node.pos_end)
+        )
 
     @classmethod
     def visit_DictNode(cls, node, context):
         from TechZen.types.dict_ import Dict
+
         res = RTResult()
         elements = {}
         keys = []
@@ -58,13 +70,19 @@ class Interpreter:
 
         try:
             for key, value in zip(keys, values):
-                elements[res.register(cls.visit(key, context))] = res.register(cls.visit(value, context))
+                elements[res.register(cls.visit(key, context))] = res.register(
+                    cls.visit(value, context)
+                )
                 if res.should_return():
                     return res
         except ValueError:
-            elements[res.register(cls.visit(keys[0], context))] = res.register(cls.visit(values[0], context))
+            elements[res.register(cls.visit(keys[0], context))] = res.register(
+                cls.visit(values[0], context)
+            )
 
-        return res.success(Dict(elements).set_context(context).set_pos(node.pos_start, node.pos_end))
+        return res.success(
+            Dict(elements).set_context(context).set_pos(node.pos_start, node.pos_end)
+        )
 
     @classmethod
     def visit_VarAccessNode(cls, node, context):
@@ -73,11 +91,14 @@ class Interpreter:
         value = context.symbol_table.get(var_name)
 
         if not value:
-            return res.failure(RTError(
-                node.pos_start, node.pos_end,
-                f"'{var_name}' is not defined",
-                context
-            ))
+            return res.failure(
+                RTError(
+                    node.pos_start,
+                    node.pos_end,
+                    f"'{var_name}' is not defined",
+                    context,
+                )
+            )
 
         if node.child:
             if not isinstance(value, Instance) and not isinstance(value, Class):
@@ -85,8 +106,8 @@ class Interpreter:
                     RTError(
                         node.pos_start,
                         node.pos_end,
-                        'Value must be instance of class or class',
-                        context
+                        "Value must be instance of class or class",
+                        context,
                     )
                 )
 
@@ -116,31 +137,44 @@ class Interpreter:
             prev = None
 
             if not nd:
-                return res.failure(RTError(
-                    node.pos_start, node.pos_end,
-                    f"'{var_name}' not defined",
-                    context
-                ))
+                return res.failure(
+                    RTError(
+                        node.pos_start,
+                        node.pos_end,
+                        f"'{var_name}' not defined",
+                        context,
+                    )
+                )
 
             for index, name_token in enumerate(node.extra_names):
                 name = name_token.value
 
                 if not isinstance(nd, Class) and not isinstance(nd, Instance):
-                    return res.failure(RTError(
-                        node.pos_start, node.pos_end,
-                        "Value must be instance of class or class",
-                        context
-                    ))
+                    return res.failure(
+                        RTError(
+                            node.pos_start,
+                            node.pos_end,
+                            "Value must be instance of class or class",
+                            context,
+                        )
+                    )
 
                 prev = nd
-                nd = nd.symbol_table.symbols[name] if name in nd.symbol_table.symbols else None
+                nd = (
+                    nd.symbol_table.symbols[name]
+                    if name in nd.symbol_table.symbols
+                    else None
+                )
 
                 if not nd and index != len(node.extra_names) - 1:
-                    return res.failure(RTError(
-                        node.pos_start, node.pos_end,
-                        f"'{name}' not defined",
-                        context
-                    ))
+                    return res.failure(
+                        RTError(
+                            node.pos_start,
+                            node.pos_end,
+                            f"'{name}' not defined",
+                            context,
+                        )
+                    )
 
             prev.symbol_table.set(name, value)
             return res.success(value)
@@ -267,8 +301,12 @@ class Interpreter:
             context.symbol_table.set(node.var_name_token.value, Number(i))
             i += step_value.value
 
-            value = (res.register(cls.visit(node.body_node, context)))
-            if res.should_return() and res.loop_should_continue is False and res.loop_should_break is False:
+            value = res.register(cls.visit(node.body_node, context))
+            if (
+                res.should_return()
+                and res.loop_should_continue is False
+                and res.loop_should_break is False
+            ):
                 return res
 
             if res.loop_should_continue:
@@ -279,8 +317,13 @@ class Interpreter:
 
             elements.append(value)
 
-        return res.success(Number.null if node.should_return_null else
-                           List(elements).set_context(context).set_pos(node.pos_start, node.pos_end))
+        return res.success(
+            Number.null
+            if node.should_return_null
+            else List(elements)
+            .set_context(context)
+            .set_pos(node.pos_start, node.pos_end)
+        )
 
     @classmethod
     def visit_WhileNode(cls, node, context):
@@ -295,8 +338,12 @@ class Interpreter:
             if not condition.is_true():
                 break
 
-            value = (res.register(cls.visit(node.body_node, context)))
-            if res.should_return() and res.loop_should_continue is False and res.loop_should_break is False:
+            value = res.register(cls.visit(node.body_node, context))
+            if (
+                res.should_return()
+                and res.loop_should_continue is False
+                and res.loop_should_break is False
+            ):
                 return res
 
             if res.loop_should_continue:
@@ -307,19 +354,28 @@ class Interpreter:
 
             elements.append(value)
 
-        return res.success(Number.null if node.should_return_null else
-                           List(elements).set_context(context).set_pos(node.pos_start, node.pos_end))
+        return res.success(
+            Number.null
+            if node.should_return_null
+            else List(elements)
+            .set_context(context)
+            .set_pos(node.pos_start, node.pos_end)
+        )
 
     @classmethod
     def visit_FuncDefNode(cls, node, context):
         from TechZen.types.function_ import Function
+
         res = RTResult()
 
         func_name = node.var_name_token.value if node.var_name_token else None
         body_node = node.body_node
         arg_names = [arg_name.value for arg_name in node.arg_name_tokens]
-        func_value = Function(func_name, body_node, arg_names, node.should_auto_return).set_context(
-            context).set_pos(node.pos_start, node.pos_end)
+        func_value = (
+            Function(func_name, body_node, arg_names, node.should_auto_return)
+            .set_context(context)
+            .set_pos(node.pos_start, node.pos_end)
+        )
 
         if node.var_name_token:
             context.symbol_table.set(func_name, func_value)
@@ -344,7 +400,11 @@ class Interpreter:
         return_value = res.register(value_to_call.execute(args))
         if res.should_return():
             return res
-        return_value = return_value.copy().set_pos(node.pos_start, node.pos_end).set_context(context)
+        return_value = (
+            return_value.copy()
+            .set_pos(node.pos_start, node.pos_end)
+            .set_context(context)
+        )
         return res.success(return_value)
 
     @classmethod
@@ -379,8 +439,11 @@ class Interpreter:
         if res.should_return():
             return res
 
-        cls_ = Class(node.class_name_token.value, ctx.symbol_table).set_context(context).set_pos(node.pos_start,
-                                                                                                 node.pos_end)
+        cls_ = (
+            Class(node.class_name_token.value, ctx.symbol_table)
+            .set_context(context)
+            .set_pos(node.pos_start, node.pos_end)
+        )
         context.symbol_table.set(node.class_name_token.value, cls_)
         return res.success(cls_)
 

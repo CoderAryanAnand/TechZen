@@ -6,7 +6,6 @@ from TechZen.symbol_table_ import SymbolTable
 
 
 class BaseFunction(Value):
-
     def __init__(self, name):
         super().__init__()
         self.name = name or "<anonymous>"
@@ -20,18 +19,24 @@ class BaseFunction(Value):
         res = RTResult()
 
         if len(args) > len(arg_names):
-            return res.failure(RTError(
-                self.pos_start, self.pos_end,
-                f"{len(args) - len(arg_names)} too many args passed into '{self.name}'",
-                self.context
-            ))
+            return res.failure(
+                RTError(
+                    self.pos_start,
+                    self.pos_end,
+                    f"{len(args) - len(arg_names)} too many args passed into '{self.name}'",
+                    self.context,
+                )
+            )
 
         if len(args) < len(arg_names):
-            return res.failure(RTError(
-                self.pos_start, self.pos_end,
-                f"{len(arg_names) - len(args)} too few args passed into '{self.name}'",
-                self.context
-            ))
+            return res.failure(
+                RTError(
+                    self.pos_start,
+                    self.pos_end,
+                    f"{len(arg_names) - len(args)} too few args passed into '{self.name}'",
+                    self.context,
+                )
+            )
         return res.success(None)
 
     @staticmethod

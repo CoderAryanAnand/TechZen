@@ -3,7 +3,6 @@ from TechZen.errors_ import RTError
 
 
 class Dict(Value):
-
     def __init__(self, elements):
         super().__init__()
         self.elements = elements
@@ -21,7 +20,12 @@ class Dict(Value):
                     new_dict.elements.pop(list(self.elements.keys())[i])
                     return new_dict, None
         except KeyError:
-            return None, RTError(other.pos_start, other.pos_end, "Key does not exist", self.context)
+            return (
+                None,
+                RTError(
+                    other.pos_start, other.pos_end, "Key does not exist", self.context
+                ),
+            )
 
     def dived_by(self, other):
         try:
@@ -29,7 +33,12 @@ class Dict(Value):
                 if list(self.elements.keys())[i].value == other.value:
                     return self.elements.get(list(self.elements.keys())[i]), None
         except KeyError:
-            return None, RTError(other.pos_start, other.pos_end, "Key does not exist", self.context)
+            return (
+                None,
+                RTError(
+                    other.pos_start, other.pos_end, "Key does not exist", self.context
+                ),
+            )
 
     def copy(self):
         copy = Dict(self.elements)
@@ -42,9 +51,9 @@ class Dict(Value):
         try:
             list_ = [f"{key}: {value}" for key, value in zip(keys, values)]
             return_dict = ", ".join([str(x) for x in list_])
-            return f'{{{return_dict}}}'
+            return f"{{{return_dict}}}"
         except ValueError:
             try:
-                return f'{{{keys[0]}: {values[0]}}}'
+                return f"{{{keys[0]}: {values[0]}}}"
             except ValueError:
-                return '{}'
+                return "{}"

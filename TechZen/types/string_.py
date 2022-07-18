@@ -3,7 +3,6 @@ from TechZen.types.number_ import Number
 
 
 class String(Value):
-
     def __init__(self, value):
         super().__init__()
         self.value = value
@@ -22,13 +21,19 @@ class String(Value):
 
     def get_comparison_eq(self, other):
         if isinstance(other, String):
-            return Number(int(self.value == other.value)).set_context(self.context), None
+            return (
+                Number(int(self.value == other.value)).set_context(self.context),
+                None,
+            )
         else:
             return None, Value.illegal_operation(self, other)
 
     def get_comparison_ne(self, other):
         if isinstance(other, String):
-            return Number(int(self.value != other.value)).set_context(self.context), None
+            return (
+                Number(int(self.value != other.value)).set_context(self.context),
+                None,
+            )
         else:
             return None, Value.illegal_operation(self, other)
 
