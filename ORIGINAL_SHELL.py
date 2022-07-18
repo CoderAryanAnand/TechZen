@@ -1,10 +1,10 @@
 from TechZen.runner import Runner
 
 while True:
-    text = input('techzen > ')
+    text = input("techzen > ")
     if text.strip() == "":
         continue
-    result, error, should_exit = Runner.run('<stdin>', text)
+    result, error, should_exit = Runner.run("<stdin>", text)
 
     if error:
         print(error.as_string())
