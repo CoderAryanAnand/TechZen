@@ -13,7 +13,6 @@ TechZen is a dynamically typed language, similar to [BASIC](https://en.wikipedia
 ## Features
 
 - Variables
-
 - Types
     - Integers
     - Floats
@@ -21,23 +20,15 @@ TechZen is a dynamically typed language, similar to [BASIC](https://en.wikipedia
     - Lists
     - Dictionaries
     - Booleans
-
 - Numerical Operators
-
 - Conditional Operators
-
 - If Statements
-
 - For Statements
-
 - While Statements
-
 - Functions
     - Built-in Functions
-
 - Classes
     - Instances
-
 - Errors
 
 ## Prerequisites
