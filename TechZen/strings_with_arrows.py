@@ -1,4 +1,11 @@
 def string_with_arrows(text, pos_start, pos_end):
+    """
+    Returns an error message with where the error occurred and shows it with arrows.
+    :param text: This is the error message
+    :param pos_start: The start of the error message
+    :param pos_end: The end of the error message
+    :return: The error message, but also where the error occurred with arrows
+    """
     result = ""
 
     # Calculate indices
