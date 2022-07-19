@@ -16,16 +16,34 @@ Number.true = Number(1)
 class Interpreter:
     @classmethod
     def visit(cls, node, context):
+        """
+        Interprets the parsed result and returns the method that belongs to it.
+        :param node: Parsed node
+        :param context: Context object
+        :return: one of the 'visit_' methods
+        """
         method_name = f"visit_{type(node).__name__}"
         method = getattr(cls, method_name, cls.no_visit_method)
         return method(node, context)
 
     @classmethod
     def no_visit_method(cls, node, context):
+        """
+        This is the method it returns when the node requested doesn't exist.
+        :param node: Parsed node
+        :param context: Context object
+        :return: error
+        """
         raise Exception(f"No visit_{type(node).__name__} method defined")
 
     @classmethod
     def visit_NumberNode(cls, node, context):
+        """
+        NumberNode method
+        :param node: Parsed node
+        :param context: Context object
+        :return: Runtime result success
+        """
         return RTResult().success(
             Number(node.token.value)
             .set_context(context)
@@ -34,6 +52,12 @@ class Interpreter:
 
     @classmethod
     def visit_StringNode(cls, node, context):
+        """
+        StringNode method
+        :param node: Parsed node
+        :param context: Context object
+        :return: Runtime result success
+        """
         from TechZen.types.string_ import String
 
         return RTResult().success(
@@ -44,6 +68,12 @@ class Interpreter:
 
     @classmethod
     def visit_ListNode(cls, node, context):
+        """
+        ListNode method
+        :param node: Parsed node
+        :param context: Context object
+        :return: Runtime result success
+        """
         res = RTResult()
         elements = []
 
@@ -58,6 +88,12 @@ class Interpreter:
 
     @classmethod
     def visit_DictNode(cls, node, context):
+        """
+        DictNode method
+        :param node: Parsed node
+        :param context: Context object
+        :return: Runtime result success
+        """
         from TechZen.types.dict_ import Dict
 
         res = RTResult()
@@ -86,6 +122,12 @@ class Interpreter:
 
     @classmethod
     def visit_VarAccessNode(cls, node, context):
+        """
+        VarAccessNode method
+        :param node: Parsed node
+        :param context: Context object
+        :return: Runtime result success
+        """
         res = RTResult()
         var_name = node.var_name_token.value
         value = context.symbol_table.get(var_name)
@@ -125,6 +167,12 @@ class Interpreter:
 
     @classmethod
     def visit_VarAssignNode(cls, node, context):
+        """
+        VarAssignNode method
+        :param node: Parsed node
+        :param context: Context object
+        :return: Runtime result success
+        """
         res = RTResult()
         var_name = node.var_name_token.value
         value = res.register(cls.visit(node.value_node, context))
@@ -184,6 +232,12 @@ class Interpreter:
 
     @classmethod
     def visit_BinOpNode(cls, node, context):  # sourcery no-metrics
+        """
+        BinOpNode method
+        :param node: Parsed node
+        :param context: Context object
+        :return: Runtime result success
+        """
         res = RTResult()
         left = res.register(cls.visit(node.left_node, context))
         if res.should_return():
@@ -230,6 +284,12 @@ class Interpreter:
 
     @classmethod
     def visit_UnaryOpNode(cls, node, context):
+        """
+        UnaryOpNode method
+        :param node: Parsed node
+        :param context: Context object
+        :return: Runtime result success
+        """
         res = RTResult()
         number = res.register(cls.visit(node.node, context))
         if res.should_return():
@@ -249,6 +309,12 @@ class Interpreter:
 
     @classmethod
     def visit_IfNode(cls, node, context):
+        """
+        IfNode method
+        :param node: Parsed node
+        :param context: Context object
+        :return: Runtime result success
+        """
         res = RTResult()
         for condition, expr, should_return_null in node.cases:
             condition_value = res.register(cls.visit(condition, context))
@@ -272,6 +338,12 @@ class Interpreter:
 
     @classmethod
     def visit_ForNode(cls, node, context):
+        """
+        ForNode method
+        :param node: Parsed node
+        :param context: Context object
+        :return: Runtime result success
+        """
         res = RTResult()
         elements = []
 
@@ -327,6 +399,12 @@ class Interpreter:
 
     @classmethod
     def visit_WhileNode(cls, node, context):
+        """
+        WhileNode method
+        :param node: Parsed node
+        :param context: Context object
+        :return: Runtime result success
+        """
         res = RTResult()
         elements = []
 
@@ -364,6 +442,12 @@ class Interpreter:
 
     @classmethod
     def visit_FuncDefNode(cls, node, context):
+        """
+        FuncDefNode method
+        :param node: Parsed node
+        :param context: Context object
+        :return: Runtime result success
+        """
         from TechZen.types.function_ import Function
 
         res = RTResult()
@@ -384,6 +468,12 @@ class Interpreter:
 
     @classmethod
     def visit_CallNode(cls, node, context):
+        """
+        CallNode method
+        :param node: Parsed node
+        :param context: Context object
+        :return: Runtime result success
+        """
         res = RTResult()
         args = []
 
@@ -409,6 +499,12 @@ class Interpreter:
 
     @classmethod
     def visit_ReturnNode(cls, node, context):
+        """
+        ReturnNode method
+        :param node: Parsed node
+        :param context: Context object
+        :return: Runtime result success, return
+        """
         res = RTResult()
 
         if node.node_to_return:
@@ -422,14 +518,32 @@ class Interpreter:
 
     @classmethod
     def visit_ContinueNode(cls, node, context):
+        """
+        ContinueNode method
+        :param node: Parsed node
+        :param context: Context object
+        :return: Runtime result success, continue
+        """
         return RTResult().success_continue()
 
     @classmethod
     def visit_BreakNode(cls, node, context):
+        """
+        BreakNode method
+        :param node: Parsed node
+        :param context: Context object
+        :return: Runtime result success, break
+        """
         return RTResult().success_break()
 
     @classmethod
     def visit_ClassNode(cls, node, context):
+        """
+        ClassNode method
+        :param node: Parsed node
+        :param context: Context object
+        :return: Runtime result success
+        """
         res = RTResult()
 
         ctx = Context(node.class_name_token.value, node.pos_start)
@@ -449,6 +563,12 @@ class Interpreter:
 
     @classmethod
     def visit_TryNode(cls, node, context):
+        """
+        TryNode method
+        :param node: Parsed node
+        :param context: Context object
+        :return: Runtime result success
+        """
         res = RTResult()
         _ = res.register(cls.visit(node.try_statements, context))
         broken = bool(res.should_return())
