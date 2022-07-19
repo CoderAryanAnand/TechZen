@@ -503,7 +503,7 @@ class Interpreter:
         ReturnNode method
         :param node: Parsed node
         :param context: Context object
-        :return: Runtime result success, return
+        :return: Runtime result success, return method
         """
         res = RTResult()
 
@@ -522,7 +522,7 @@ class Interpreter:
         ContinueNode method
         :param node: Parsed node
         :param context: Context object
-        :return: Runtime result success, continue
+        :return: Runtime result success, continue method
         """
         return RTResult().success_continue()
 
@@ -532,7 +532,7 @@ class Interpreter:
         BreakNode method
         :param node: Parsed node
         :param context: Context object
-        :return: Runtime result success, break
+        :return: Runtime result success, break method
         """
         return RTResult().success_break()
 
