@@ -30,6 +30,10 @@ TechZen is a dynamically typed language, similar to [BASIC](https://en.wikipedia
 - Classes
     - Instances
 - Errors
+    - Illegal character
+    - Expected character
+    - Invalid syntax
+    - Runtime error
 
 ## Prerequisites
 
