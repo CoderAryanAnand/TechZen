@@ -6,6 +6,7 @@
 ![issues](https://img.shields.io/github/issues/CoderAryanAnand/TechZen)
 ![workflow](https://github.com/CoderAryanAnand/TechZen/actions/workflows/unittests.yml/badge.svg)
 ![license](https://img.shields.io/github/license/CoderAryanAnand/TechZen)
+[![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
 
 # TechZen
 TechZen is a dynamically typed language, similar to [BASIC](https://en.wikipedia.org/wiki/BASIC), coded and interpreted in [Python 3](https://www.python.org).
