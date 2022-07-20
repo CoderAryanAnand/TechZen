@@ -122,7 +122,7 @@ class BuiltInFunction(BaseFunction):
         :param exec_ctx: Context for symbol table
         :return: Runtime result
         """
-        os.system("cls" if os.name == "nt" else "cls")
+        os.system("cls" if os.name == "nt" else "clear")
         return RTResult().success(Number.null)
 
     execute_clear.arg_names = []
