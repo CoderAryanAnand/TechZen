@@ -2,6 +2,8 @@ from TechZen.errors_ import InvalidSyntaxError
 from TechZen.nodes_ import *
 from TechZen.token_ import TokenType, Keywords
 
+# Todo docstring
+
 #######################################
 # PARSE RESULT
 #######################################
@@ -49,26 +51,49 @@ class ParseResult:
 
 class Parser:
     def __init__(self, tokens):
+        """
+        This is the parser. It looks if there is an illegal character error, or expected character error. It also
+        finds out if the syntax for each expression / statement is correct, and if it's math, it places parentheses in
+        correct places.
+        :param tokens: All the tokens found from the lexer
+        """
         self.tokens = tokens
         self.token_idx = -1
         self.current_token = None
         self.advance()
 
     def advance(self):
+        """
+        Advances to the next token
+        :return: Current token (after advancing)
+        """
         self.token_idx += 1
         self.update_current_token()
         return self.current_token
 
     def reverse(self, amount=1):
+        """
+        Goes back to the previous token
+        :param amount: How many tokens to go back, default 1
+        :return: Current token
+        """
         self.token_idx -= amount
         self.update_current_token()
         return self.current_token
 
     def update_current_token(self):
+        """
+        Update the current token
+        :return: nothing
+        """
         if 0 <= self.token_idx < len(self.tokens):
             self.current_token = self.tokens[self.token_idx]
 
     def parse(self):
+        """
+        This parses all the code. SEE GRAMMAR.TXT FOR MORE EXPLANATION.
+        :return: Parse result
+        """
         res = self.statements()
         if not res.error and self.current_token.type != TokenType.TT_EOF:
             return res.failure(
@@ -83,6 +108,10 @@ class Parser:
     ###################################
 
     def statements(self):
+        """
+        Parses all statements.
+        :return: Parse result
+        """
         res = ParseResult()
         statements = []
         pos_start = self.current_token.pos_start.copy()
@@ -120,6 +149,10 @@ class Parser:
         )
 
     def statement(self):
+        """
+        Parses all statements in statements.
+        :return: Parse result
+        """
         res = ParseResult()
         pos_start = self.current_token.pos_start.copy()
 
@@ -162,6 +195,10 @@ class Parser:
         return res.success(expr)
 
     def expr(self):
+        """
+        Parses all expressions.
+        :return: Parse result
+        """
         res = ParseResult()
 
         if self.current_token.matches(TokenType.TT_KEYWORD, Keywords.KW_VAR.value):
@@ -240,6 +277,10 @@ class Parser:
         return res.success(node)
 
     def comp_expr(self):
+        """
+        Parses all comparison expressions.
+        :return: Parse result
+        """
         res = ParseResult()
         if self.current_token.matches(TokenType.TT_KEYWORD, Keywords.KW_NOT.value):
             op_token = self.current_token
@@ -277,15 +318,27 @@ class Parser:
         return res.success(node)
 
     def arith_expr(self):
+        """
+        Parses all arithmetic expressions.
+        :return: Parse result
+        """
         return self.bin_op(self.term, (TokenType.TT_PLUS, TokenType.TT_MINUS))
 
     def term(self):
+        """
+        Parses all terms.
+        :return: Parse result
+        """
         return self.bin_op(
             self.factor,
             (TokenType.TT_MUL, TokenType.TT_DIV, TokenType.TT_MOD, TokenType.TT_DFL),
         )
 
     def factor(self):
+        """
+        Parses all factors.
+        :return: Parse result
+        """
         res = ParseResult()
         token = self.current_token
 
@@ -300,9 +353,17 @@ class Parser:
         return self.power()
 
     def power(self):
+        """
+        Parses all powers.
+        :return: Parse result
+        """
         return self.bin_op(self.call, (TokenType.TT_POW,), self.factor)
 
     def call(self):
+        """
+        Parses all function calls.
+        :return: Parse result
+        """
         res = ParseResult()
         atom = res.register(self.atom())
         if res.error:
@@ -363,6 +424,10 @@ class Parser:
         return res.success(atom)
 
     def atom(self):
+        """
+        Parses all atoms. (see grammar.txt for more explanation)
+        :return: Parse result
+        """
         # sourcery no-metrics skip: remove-unnecessary-else, swap-if-else-branches
         res = ParseResult()
         token = self.current_token
@@ -459,6 +524,10 @@ class Parser:
         )
 
     def list_expr(self):
+        """
+        Parses all list expressions.
+        :return: Parse result
+        """
         res = ParseResult()
         element_nodes = []
         pos_start = self.current_token.pos_start.copy()
@@ -510,6 +579,10 @@ class Parser:
         )
 
     def dict_expr(self):
+        """
+        Parses all dictionary expressions.
+        :return: Parse result
+        """
         res = ParseResult()
         element_nodes = {}
         pos_start = self.current_token.pos_start.copy()
@@ -608,6 +681,10 @@ class Parser:
         )
 
     def if_expr(self):
+        """
+        Parses all if expressions (only if).
+        :return: Parse result
+        """
         res = ParseResult()
         all_cases = res.register(self.if_expr_cases(Keywords.KW_IF.value))
         if res.error:
@@ -616,9 +693,17 @@ class Parser:
         return res.success(IfNode(cases, else_case))
 
     def if_expr_b(self):
+        """
+        Parses all if expressions (only elif).
+        :return: Parse result
+        """
         return self.if_expr_cases(Keywords.KW_ELIF.value)
 
     def if_expr_c(self):
+        """
+        Parses all if expressions (only else).
+        :return: Parse result
+        """
         res = ParseResult()
         else_case = None
 
@@ -656,6 +741,10 @@ class Parser:
         return res.success(else_case)
 
     def if_expr_b_or_c(self):
+        """
+        Decides whether if expression is elif or else.
+        :return: Parse result
+        """
         res = ParseResult()
         cases, else_case = [], None
 
@@ -672,6 +761,10 @@ class Parser:
         return res.success((cases, else_case))
 
     def if_expr_cases(self, case_keyword):
+        """
+        Parses all if expressions.
+        :return: Parse result
+        """
         res = ParseResult()
         cases = []
         else_case = None
@@ -737,6 +830,10 @@ class Parser:
         return res.success((cases, else_case))
 
     def for_expr(self):
+        """
+        Parses all for loops.
+        :return: Parse result
+        """
         res = ParseResult()
 
         if not self.current_token.matches(TokenType.TT_KEYWORD, Keywords.KW_FOR.value):
@@ -853,6 +950,10 @@ class Parser:
         )
 
     def while_expr(self):
+        """
+        Parses all while loops.
+        :return: Parse result
+        """
         res = ParseResult()
 
         if not self.current_token.matches(
@@ -916,6 +1017,10 @@ class Parser:
         return res.success(WhileNode(condition, body, False))
 
     def class_node(self):
+        """
+        Parses all class nodes.
+        :return: Parse result
+        """
         res = ParseResult()
 
         pos_start = self.current_token.pos_start
@@ -981,6 +1086,10 @@ class Parser:
         )
 
     def func_def(self):
+        """
+        Parses all function definitions.
+        :return: Parse result
+        """
         res = ParseResult()
 
         if not self.current_token.matches(TokenType.TT_KEYWORD, Keywords.KW_FUN.value):
@@ -1105,6 +1214,10 @@ class Parser:
         return res.success(FuncDefNode(var_name_token, arg_name_tokens, body, False))
 
     def try_expr(self):
+        """
+        Parses all try expressions.
+        :return: Parse result
+        """
         res = ParseResult()
         pos_start = self.current_token.pos_start
 
