@@ -11,7 +11,7 @@ Number.true = Number(1)
 class Function(BaseFunction):
     def __init__(self, name, body_node, arg_names, should_auto_return):
         """
-        Function class. Inherits from BaseFunction.
+        Function type. Inherits from BaseFunction.
         :param name: Function name
         :param body_node: Function code
         :param arg_names: Function arguments
