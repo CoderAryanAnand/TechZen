@@ -4,7 +4,7 @@ from TechZen.types.value_ import Value
 class Instance(Value):
     def __init__(self, parent_class):
         """
-        Instance class. Inherits from Value class.
+        Instance type. Inherits from Value class.
         :param parent_class: Parent class
         """
         super().__init__()
