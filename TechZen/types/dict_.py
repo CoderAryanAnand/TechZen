@@ -4,15 +4,29 @@ from TechZen.errors_ import RTError
 
 class Dict(Value):
     def __init__(self, elements):
+        """
+        Dictionary type. Inherits from Value class.
+        :param elements: Elements of the dictionary
+        """
         super().__init__()
         self.elements = elements
 
     def added_to(self, other):
+        """
+        Add more elements to the dictionary.
+        :param other: Dictionary to be added
+        :return: Updated dictionary
+        """
         new_dict = self.copy()
         new_dict.elements.update(other.elements)
         return new_dict, None
 
     def subbed_by(self, other):
+        """
+        Remove element from dictionary
+        :param other: Key to be removed
+        :return: Updated dictionary
+        """
         new_dict = self.copy()
         try:
             for i in range(len(list(self.elements.keys()))):
@@ -28,6 +42,11 @@ class Dict(Value):
             )
 
     def dived_by(self, other):
+        """
+        Get value belonging to key from dictionary
+        :param other: Key
+        :return: Value
+        """
         try:
             for i in range(len(list(self.elements.keys()))):
                 if list(self.elements.keys())[i].value == other.value:
@@ -41,6 +60,10 @@ class Dict(Value):
             )
 
     def copy(self):
+        """
+        Return a copy of the dictionary
+        :return: Copy
+        """
         copy = Dict(self.elements)
         copy.set_pos(self.pos_start, self.pos_end)
         copy.set_context(self.context)
