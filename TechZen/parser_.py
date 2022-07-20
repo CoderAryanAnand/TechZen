@@ -51,7 +51,7 @@ class ParseResult:
 
     def success(self, node):
         """
-        This doesn't do much, just registers self.node = node.
+        Register the success
         :param node: node
         :return: Parse result
         """
@@ -60,7 +60,7 @@ class ParseResult:
 
     def failure(self, error):
         """
-        Registers the failure, and saves the error.
+        Register the failure, and save the error.
         :param error: Error
         :return: Parse result
         """
