@@ -2,8 +2,6 @@ from TechZen.errors_ import InvalidSyntaxError
 from TechZen.nodes_ import *
 from TechZen.token_ import TokenType, Keywords
 
-# Todo docstring
-
 #######################################
 # PARSE RESULT
 #######################################
@@ -11,6 +9,9 @@ from TechZen.token_ import TokenType, Keywords
 
 class ParseResult:
     def __init__(self):
+        """
+        This is the parse result. This class checks if there are any errors, or successes.
+        """
         self.error = None
         self.node = None
         self.last_registered_advance_count = 0
@@ -18,10 +19,19 @@ class ParseResult:
         self.to_reverse_count = 0
 
     def register_advancement(self):
+        """
+        Register the advancement
+        :return: nothing
+        """
         self.last_registered_advance_count = 1
         self.advance_count += 1
 
     def register(self, res):
+        """
+        Register the result
+        :param res: Result
+        :return: Result node
+        """
         self.last_registered_advance_count = res.advance_count
         self.advance_count += res.advance_count
         if res.error:
@@ -29,16 +39,31 @@ class ParseResult:
         return res.node
 
     def try_register(self, res):
+        """
+        Try to register the result, else reverse the advances
+        :param res: Result
+        :return: self.register if it works, else None
+        """
         if res.error:
             self.to_reverse_count = res.advance_count
             return None
         return self.register(res)
 
     def success(self, node):
+        """
+        This doesn't do much, just registers self.node = node.
+        :param node: node
+        :return: Parse result
+        """
         self.node = node
         return self
 
     def failure(self, error):
+        """
+        Registers the failure, and saves the error.
+        :param error: Error
+        :return: Parse result
+        """
         if not self.error or self.last_registered_advance_count == 0:
             self.error = error
         return self
@@ -53,8 +78,8 @@ class Parser:
     def __init__(self, tokens):
         """
         This is the parser. It looks if there is an illegal character error, or expected character error. It also
-        finds out if the syntax for each expression / statement is correct, and if it's math, it places parentheses in
-        correct places.
+        finds out if the syntax for each expression / statement is correct. It also prioritizes things, for example,
+        multiplication before addition.
         :param tokens: All the tokens found from the lexer
         """
         self.tokens = tokens
