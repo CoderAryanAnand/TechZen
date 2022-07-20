@@ -60,7 +60,7 @@ If you have a question or a minor problem, just open an issue. If you have major
 
 - [x] Classes
 - [x] Try statement
-- [ ] Docstrings for all functions and classes
+- [x] Docstrings for all functions and classes
 
 >This list will always stay at three elements. These are always the latest todos.
 
