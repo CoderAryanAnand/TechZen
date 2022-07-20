@@ -7,15 +7,29 @@ from TechZen.symbol_table_ import SymbolTable
 
 class BaseFunction(Value):
     def __init__(self, name):
+        """
+        Base class for functions.
+        :param name: Function name
+        """
         super().__init__()
         self.name = name or "<anonymous>"
 
     def generate_new_context(self):
+        """
+        Generate a new context for the function.
+        :return: New context
+        """
         new_context = Context(self.name, self.context, self.pos_start)
         new_context.symbol_table = SymbolTable(new_context.parent.symbol_table)
         return new_context
 
     def check_args(self, arg_names, args):
+        """
+        Check all function arguments when you call the function.
+        :param arg_names: Function arguments
+        :param args: User inputted arguments
+        :return: Either runtime result success or failure
+        """
         res = RTResult()
 
         if len(args) > len(arg_names):
@@ -41,6 +55,13 @@ class BaseFunction(Value):
 
     @staticmethod
     def populate_args(arg_names, args, exec_ctx):
+        """
+        Populate function with the arguments.
+        :param arg_names: Function arguments
+        :param args: User inputted arguments
+        :param exec_ctx: Context for symbol table
+        :return: nothing
+        """
         for i in range(len(args)):
             arg_name = arg_names[i]
             arg_value = args[i]
@@ -48,6 +69,13 @@ class BaseFunction(Value):
             exec_ctx.symbol_table.set(arg_name, arg_value)
 
     def check_and_populate_args(self, arg_names, args, exec_ctx):
+        """
+        Check how if the number of arguments passed are valid and then populate the function with those arguments.
+        :param arg_names: Function arguments
+        :param args: User inputted arguments
+        :param exec_ctx: Context for symbol table
+        :return: Runtime result success
+        """
         res = RTResult()
         res.register(self.check_args(arg_names, args))
         if res.should_return():
