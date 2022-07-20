@@ -6,6 +6,12 @@ from TechZen.context_ import Context
 class Runner:
     @staticmethod
     def run(fn, text):
+        """
+        This runs all of the code together to understand techzen code.
+        :param fn: Filename in which the code is run
+        :param text: Input text / code
+        :return: result of the run code
+        """
         from TechZen.global_symbol_table_ import global_symbol_table
         from TechZen.lexer_ import Lexer
 
