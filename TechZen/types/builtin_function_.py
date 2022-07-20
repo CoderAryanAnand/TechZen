@@ -15,9 +15,18 @@ Number.true = Number(1)
 
 class BuiltInFunction(BaseFunction):
     def __init__(self, name):
+        """
+        Built-in functions. The other functions are inherited from the base function.
+        :param name: Function name
+        """
         super().__init__(name)
 
     def execute(self, args):
+        """
+        Execute the function.
+        :param args: User inputted arguments
+        :return: Runtime result
+        """
         res = RTResult()
         exec_ctx = self.generate_new_context()
 
@@ -35,9 +44,19 @@ class BuiltInFunction(BaseFunction):
         return res.success(return_value)
 
     def no_visit_method(self, node, context):
+        """
+        This is the method that runs when the user typed in an invalid built-in function (doesn't exist).
+        :param node: Node
+        :param context: Context
+        :return: Error
+        """
         raise Exception(f"No execute_{self.name} method defined")
 
     def copy(self):
+        """
+        Make a copy of the built-in function.
+        :return: Copy
+        """
         copy = BuiltInFunction(self.name)
         copy.set_pos(self.pos_start, self.pos_end)
         copy.set_context(self.context)
@@ -47,17 +66,32 @@ class BuiltInFunction(BaseFunction):
         return f"<built-in function {self.name}>"
 
     def execute_print(self, exec_ctx):
+        """
+        Built-in print function.
+        :param exec_ctx: Context for symbol table
+        :return: Runtime result
+        """
         print(exec_ctx.symbol_table.get("value"))
         return RTResult().success(Number.null)
 
     execute_print.arg_names = ["value"]
 
     def execute_print_ret(self, exec_ctx):
+        """
+        Built-in print return function.
+        :param exec_ctx: Context for symbol table
+        :return: Runtime result
+        """
         return RTResult().success(String(str(exec_ctx.symbol_table.get("value"))))
 
     execute_print_ret.arg_names = ["value"]
 
     def execute_input(self, exec_ctx):
+        """
+        Built-in input function.
+        :param exec_ctx: Context for symbol table
+        :return: Runtime result
+        """
         question = exec_ctx.symbol_table.get("value") or None
         text = input(question)
         return RTResult().success(String(text))
@@ -65,6 +99,11 @@ class BuiltInFunction(BaseFunction):
     execute_input.arg_names = ["value"]
 
     def execute_input_int(self, exec_ctx):
+        """
+        Built-in integer input function.
+        :param exec_ctx: Context for symbol table
+        :return: Runtime result
+        """
         question = exec_ctx.symbol_table.get("value") or None
         while True:
             text = input(question)
@@ -78,36 +117,66 @@ class BuiltInFunction(BaseFunction):
     execute_input_int.arg_names = ["value"]
 
     def execute_clear(self, exec_ctx):
+        """
+        Built-in clear function. (works only on Windows, if you want to use it on another OS change 'cls' to 'clear')
+        :param exec_ctx: Context for symbol table
+        :return: Runtime result
+        """
         os.system("cls" if os.name == "nt" else "cls")
         return RTResult().success(Number.null)
 
     execute_clear.arg_names = []
 
     def execute_is_number(self, exec_ctx):
+        """
+        Built-in is a number function.
+        :param exec_ctx: Context for symbol table
+        :return: Runtime result
+        """
         is_number = isinstance(exec_ctx.symbol_table.get("value"), Number)
         return RTResult().success(Number.true if is_number else Number.false)
 
     execute_is_number.arg_names = ["value"]
 
     def execute_is_string(self, exec_ctx):
+        """
+        Built-in is a string function.
+        :param exec_ctx: Context for symbol table
+        :return: Runtime result
+        """
         is_string = isinstance(exec_ctx.symbol_table.get("value"), String)
         return RTResult().success(Number.true if is_string else Number.false)
 
     execute_is_string.arg_names = ["value"]
 
     def execute_is_list(self, exec_ctx):
+        """
+        Built-in is a list function.
+        :param exec_ctx: Context for symbol table
+        :return: Runtime result
+        """
         is_list = isinstance(exec_ctx.symbol_table.get("value"), List)
         return RTResult().success(Number.true if is_list else Number.false)
 
     execute_is_list.arg_names = ["value"]
 
     def execute_is_function(self, exec_ctx):
+        """
+        Built-in 'is a function' function.
+        :param exec_ctx: Context for symbol table
+        :return: Runtime result
+        """
         is_function = isinstance(exec_ctx.symbol_table.get("value"), BaseFunction)
         return RTResult().success(Number.true if is_function else Number.false)
 
     execute_is_function.arg_names = ["value"]
 
     def execute_append(self, exec_ctx):
+        """
+        Built-in append to list function.
+        :param exec_ctx: Context for symbol table
+        :return: Runtime result
+        """
         list_ = exec_ctx.symbol_table.get("list")
         value = exec_ctx.symbol_table.get("value")
 
@@ -127,6 +196,11 @@ class BuiltInFunction(BaseFunction):
     execute_append.arg_names = ["list", "value"]
 
     def execute_pop(self, exec_ctx):
+        """
+        Built-in pop from list function.
+        :param exec_ctx: Context for symbol table
+        :return: Runtime result
+        """
         list_ = exec_ctx.symbol_table.get("list")
         index = exec_ctx.symbol_table.get("index")
 
@@ -166,6 +240,11 @@ class BuiltInFunction(BaseFunction):
     execute_pop.arg_names = ["list", "index"]
 
     def execute_extend(self, exec_ctx):
+        """
+        Built-in extend list function.
+        :param exec_ctx: Context for symbol table
+        :return: Runtime result
+        """
         list_a = exec_ctx.symbol_table.get("listA")
         list_b = exec_ctx.symbol_table.get("listB")
 
@@ -195,6 +274,11 @@ class BuiltInFunction(BaseFunction):
     execute_extend.arg_names = ["listA", "listB"]
 
     def execute_update_list(self, exec_ctx):
+        """
+        Built-in update list function.
+        :param exec_ctx: Context for symbol table
+        :return: Runtime result
+        """
         list_ = exec_ctx.symbol_table.get("list")
         idx = exec_ctx.symbol_table.get("index")
         replacement = exec_ctx.symbol_table.get("replacement")
@@ -232,6 +316,11 @@ class BuiltInFunction(BaseFunction):
     execute_update_list.arg_names = ["list", "index", "replacement"]
 
     def execute_len(self, exec_ctx):
+        """
+        Built-in list length function.
+        :param exec_ctx: Context for symbol table
+        :return: Runtime result
+        """
         list_ = exec_ctx.symbol_table.get("list")
 
         if not isinstance(list_, List):
@@ -243,6 +332,11 @@ class BuiltInFunction(BaseFunction):
     execute_len.arg_names = ["list"]
 
     def execute_lower(self, exec_ctx):
+        """
+        Built-in lower string function.
+        :param exec_ctx: Context for symbol table
+        :return: Runtime result
+        """
         string_ = exec_ctx.symbol_table.get("value")
 
         if not isinstance(string_, String):
@@ -256,6 +350,11 @@ class BuiltInFunction(BaseFunction):
     execute_lower.arg_names = ["value"]
 
     def execute_upper(self, exec_ctx):
+        """
+        Built-in upper string function.
+        :param exec_ctx: Context for symbol table
+        :return: Runtime result
+        """
         string_ = exec_ctx.symbol_table.get("value")
 
         if not isinstance(string_, String):
@@ -269,6 +368,11 @@ class BuiltInFunction(BaseFunction):
     execute_upper.arg_names = ["value"]
 
     def execute_string(self, exec_ctx):
+        """
+        Built-in make string function.
+        :param exec_ctx: Context for symbol table
+        :return: Runtime result
+        """
         integer_ = exec_ctx.symbol_table.get("value")
 
         if not isinstance(integer_, Number):
@@ -282,6 +386,11 @@ class BuiltInFunction(BaseFunction):
     execute_string.arg_names = ["value"]
 
     def execute_run(self, exec_ctx):
+        """
+        Built-in run file function.
+        :param exec_ctx: Context for symbol table
+        :return: Runtime result
+        """
         fn = exec_ctx.symbol_table.get("fn")
 
         if not isinstance(fn, String):
@@ -325,6 +434,11 @@ class BuiltInFunction(BaseFunction):
     execute_run.arg_names = ["fn"]
 
     def execute_exit(self, exec_ctx):
+        """
+        Built-in exit function.
+        :param exec_ctx: Context for symbol table
+        :return: Runtime result
+        """
         return RTResult().success_exit(Number.null)
 
     execute_exit.arg_names = []
