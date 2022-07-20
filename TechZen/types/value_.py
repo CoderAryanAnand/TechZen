@@ -33,7 +33,7 @@ class Value:
     def added_to(self, other):
         """
         Function for when there is an addition sign after the class.
-        :param other: Class / value after the sign
+        :param other: Class / other
         :return: Illegal operation error
         """
         return None, self.illegal_operation(other)
@@ -41,7 +41,7 @@ class Value:
     def subbed_by(self, other):
         """
         Function for when there is a subtraction sign after the class.
-        :param other: Class / value after the sign
+        :param other: Class / other
         :return: Illegal operation error
         """
         return None, self.illegal_operation(other)
@@ -49,7 +49,7 @@ class Value:
     def multed_by(self, other):
         """
         Function for when there is a multiplication sign after the class.
-        :param other: Class / value after the sign
+        :param other: Class / other
         :return: Illegal operation error
         """
         return None, self.illegal_operation(other)
@@ -57,7 +57,7 @@ class Value:
     def dived_by(self, other):
         """
         Function for when there is a division sign after the class.
-        :param other: Class / value after the sign
+        :param other: Class / other
         :return: Illegal operation error
         """
         return None, self.illegal_operation(other)
@@ -65,7 +65,7 @@ class Value:
     def pow_of(self, other):
         """
         Function for when there is a power sign after the class.
-        :param other: Class / value after the sign
+        :param other: Class / other
         :return: Illegal operation error
         """
         return None, self.illegal_operation(other)
@@ -73,7 +73,7 @@ class Value:
     def floor_of(self, other):
         """
         Function for when there is a floor sign after the class.
-        :param other: Class / value after the sign
+        :param other: Class / other
         :return: Illegal operation error
         """
         return None, self.illegal_operation(other)
@@ -81,7 +81,7 @@ class Value:
     def mod_by(self, other):
         """
         Function for when there is a modulo sign after the class.
-        :param other: Class / value after the sign
+        :param other: Class / other
         :return: Illegal operation error
         """
         return None, self.illegal_operation(other)
@@ -89,7 +89,7 @@ class Value:
     def get_comparison_eq(self, other):
         """
         Function for when there is an equal to sign after the class.
-        :param other: Class / value after the sign
+        :param other: Class / other
         :return: Illegal operation error
         """
         return None, self.illegal_operation(other)
@@ -97,7 +97,7 @@ class Value:
     def get_comparison_ne(self, other):
         """
         Function for when there is a not equal to sign after the class.
-        :param other: Class / value after the sign
+        :param other: Class / other
         :return: Illegal operation error
         """
         return None, self.illegal_operation(other)
@@ -105,7 +105,7 @@ class Value:
     def get_comparison_lt(self, other):
         """
         Function for when there is a less than sign after the class.
-        :param other: Class / value after the sign
+        :param other: Class / other
         :return: Illegal operation error
         """
         return None, self.illegal_operation(other)
@@ -113,7 +113,7 @@ class Value:
     def get_comparison_gt(self, other):
         """
         Function for when there is a greater than sign after the class.
-        :param other: Class / value after the sign
+        :param other: Class / other
         :return: Illegal operation error
         """
         return None, self.illegal_operation(other)
@@ -121,7 +121,7 @@ class Value:
     def get_comparison_lte(self, other):
         """
         Function for when there is a less than or equal to sign after the class.
-        :param other: Class / value after the sign
+        :param other: Class / other
         :return: Illegal operation error
         """
         return None, self.illegal_operation(other)
@@ -129,7 +129,7 @@ class Value:
     def get_comparison_gte(self, other):
         """
         Function for when there is a greater than or equal to sign after the class.
-        :param other: Class / value after the sign
+        :param other: Class / other
         :return: Illegal operation error
         """
         return None, self.illegal_operation(other)
@@ -183,7 +183,7 @@ class Value:
     def illegal_operation(self, other=None):
         """
         The illegal operation error.
-        :param other: The value after the sign / keyword.
+        :param other: The other / keyword.
         :return: Illegal operation error
         """
         if not other:

@@ -9,11 +9,21 @@ from TechZen.runtime_ import RTResult
 
 class Class(Value):
     def __init__(self, name, symbol_table):
+        """
+        Class type. Inherits from Value class.
+        :param name: Class name
+        :param symbol_table: Symbol table
+        """
         super().__init__()
         self.name = name
         self.symbol_table = symbol_table
 
     def dived_by(self, other):
+        """
+        Function for when there is a division sign after the class.
+        :param other: Class / other
+        :return: Illegal operation error
+        """
         if not isinstance(other, String):
             return None, self.illegal_operation(other)
 
