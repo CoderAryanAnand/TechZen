@@ -2,10 +2,10 @@
 
 [![Codacy Badge](https://app.codacy.com/project/badge/Grade/4e78847b0b244b2db71fe12e892e4d56)](https://www.codacy.com/gh/CoderAryanAnand/TechZen/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=CoderAryanAnand/TechZen&amp;utm_campaign=Badge_Grade)
 ![repository size](https://img.shields.io/github/repo-size/CoderAryanAnand/TechZen)
-![files](https://img.shields.io/github/directory-file-count/CoderAryanAnand/TechZen)
+![lines of code](https://img.shields.io/tokei/lines/github/CoderAryanAnand/TechZen)
 ![issues](https://img.shields.io/github/issues/CoderAryanAnand/TechZen)
 ![workflow](https://github.com/CoderAryanAnand/TechZen/actions/workflows/unittests.yml/badge.svg)
-![license](https://img.shields.io/github/license/CoderAryanAnand/TechZen)
+[![license](https://img.shields.io/github/license/CoderAryanAnand/TechZen)](https://creativecommons.org/publicdomain/zero/1.0/)
 [![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
 
 # TechZen
