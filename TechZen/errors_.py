@@ -40,35 +40,35 @@ class IllegalCharError(Error):
 
 
 class ExpectedCharError(Error):
-    """
-    An expected character error. When a character is not the expected one.
-    :param pos_start: Where the error in the code starts
-    :param pos_end: Where the error in the code ends
-    :param details: Details of the error
-    """
     def __init__(self, pos_start, pos_end, details):
+        """
+        An expected character error. When a character is not the expected one.
+        :param pos_start: Where the error in the code starts
+        :param pos_end: Where the error in the code ends
+        :param details: Details of the error
+        """
         super().__init__(pos_start, pos_end, "Expected Character", details)
 
 
 class InvalidSyntaxError(Error):
-    """
-    An invalid syntax error.
-    :param pos_start: Where the error in the code starts
-    :param pos_end: Where the error in the code ends
-    :param details: Details of the error
-    """
     def __init__(self, pos_start, pos_end, details):
+        """
+        An invalid syntax error.
+        :param pos_start: Where the error in the code starts
+        :param pos_end: Where the error in the code ends
+        :param details: Details of the error
+        """
         super().__init__(pos_start, pos_end, "Invalid Syntax", details)
 
 
 class RTError(Error):
-    """
-    A runtime error.
-    :param pos_start: Where the error in the code starts
-    :param pos_end: Where the error in the code ends
-    :param details: Details of the error
-    """
     def __init__(self, pos_start, pos_end, details, context):
+        """
+        A runtime error.
+        :param pos_start: Where the error in the code starts
+        :param pos_end: Where the error in the code ends
+        :param details: Details of the error
+        """
         super().__init__(pos_start, pos_end, "Runtime Error", details)
         self.context = context
 

@@ -1,5 +1,7 @@
 from TechZen.errors_ import InvalidSyntaxError
-from TechZen.nodes_ import *
+from TechZen.nodes_ import (NumberNode, StringNode, ListNode, DictNode, VarAccessNode, VarAssignNode, BinOpNode,
+                            UnaryOpNode, IfNode, ForNode, WhileNode, FuncDefNode, CallNode, ReturnNode, ContinueNode,
+                            BreakNode, ClassNode, TryNode)
 from TechZen.token_ import TokenType, Keywords
 
 #######################################
@@ -453,7 +455,6 @@ class Parser:
         Parses all atoms. (see grammar.txt for more explanation)
         :return: Parse result
         """
-        # sourcery no-metrics skip: remove-unnecessary-else, swap-if-else-branches
         res = ParseResult()
         token = self.current_token
 

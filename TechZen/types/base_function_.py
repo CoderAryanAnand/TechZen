@@ -62,7 +62,7 @@ class BaseFunction(Value):
         :param exec_ctx: Context for symbol table
         :return: nothing
         """
-        for i in range(len(args)):
+        for i, _ in enumerate(args):
             arg_name = arg_names[i]
             arg_value = args[i]
             arg_value.set_context(exec_ctx)
