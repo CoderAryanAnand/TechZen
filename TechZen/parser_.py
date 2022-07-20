@@ -1,7 +1,24 @@
 from TechZen.errors_ import InvalidSyntaxError
-from TechZen.nodes_ import (NumberNode, StringNode, ListNode, DictNode, VarAccessNode, VarAssignNode, BinOpNode,
-                            UnaryOpNode, IfNode, ForNode, WhileNode, FuncDefNode, CallNode, ReturnNode, ContinueNode,
-                            BreakNode, ClassNode, TryNode)
+from TechZen.nodes_ import (
+    NumberNode,
+    StringNode,
+    ListNode,
+    DictNode,
+    VarAccessNode,
+    VarAssignNode,
+    BinOpNode,
+    UnaryOpNode,
+    IfNode,
+    ForNode,
+    WhileNode,
+    FuncDefNode,
+    CallNode,
+    ReturnNode,
+    ContinueNode,
+    BreakNode,
+    ClassNode,
+    TryNode,
+)
 from TechZen.token_ import TokenType, Keywords
 
 #######################################
@@ -441,7 +458,7 @@ class Parser:
                         InvalidSyntaxError(
                             self.current_token.pos_start,
                             self.current_token.pos_end,
-                            f"Expected ',' or ')'",
+                            "Expected ',' or ')'",
                         )
                     )
 
