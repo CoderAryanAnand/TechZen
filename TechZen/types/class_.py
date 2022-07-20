@@ -42,6 +42,11 @@ class Class(Value):
         return value, None
 
     def execute(self, args):
+        """
+        Execute the class.
+        :param args: Class arguments
+        :return: Runtime result
+        """
         from TechZen.types.function_ import Function
 
         res = RTResult()
@@ -86,6 +91,10 @@ class Class(Value):
         )
 
     def copy(self):
+        """
+        Create a copy of the class
+        :return: Copy
+        """
         return self
 
     def __repr__(self):
