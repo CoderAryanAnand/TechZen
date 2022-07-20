@@ -122,6 +122,13 @@ KEYWORDS = {
 
 class Token:
     def __init__(self, type_, value=None, pos_start=None, pos_end=None):
+        """
+        This is the token class. It defines the token and its values.
+        :param type_: The TokenType
+        :param value: Value of the token
+        :param pos_start: Start position of the token
+        :param pos_end: End position of the token
+        """
         self.type = type_
         self.value = value
 
@@ -134,6 +141,12 @@ class Token:
             self.pos_end = pos_end.copy()
 
     def matches(self, type_, value):
+        """
+        Find if token type matches the value
+        :param type_: TokenType
+        :param value: value
+        :return: TokenType == value
+        """
         return self.type == type_ and self.value.upper() == value
 
     def __repr__(self):
