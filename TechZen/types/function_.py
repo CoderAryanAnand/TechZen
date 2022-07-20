@@ -10,12 +10,24 @@ Number.true = Number(1)
 
 class Function(BaseFunction):
     def __init__(self, name, body_node, arg_names, should_auto_return):
+        """
+        Function class. Inherits from BaseFunction.
+        :param name: Function name
+        :param body_node: Function code
+        :param arg_names: Function arguments
+        :param should_auto_return: True or False
+        """
         super().__init__(name)
         self.body_node = body_node
         self.arg_names = arg_names
         self.should_auto_return = should_auto_return
 
     def execute(self, args):
+        """
+        Execute the function code.
+        :param args: User-inputted arguments
+        :return:
+        """
         res = RTResult()
         interpreter = Interpreter()
         exec_ctx = self.generate_new_context()
@@ -35,6 +47,10 @@ class Function(BaseFunction):
         return res.success(ret_value)
 
     def copy(self):
+        """
+        Make a copy of the function
+        :return: Copy
+        """
         return self
 
     def __repr__(self):
