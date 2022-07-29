@@ -23,7 +23,7 @@ end
 if answer == "yes" then
     var score = q1()
 else
-    PRINT("Sorry to hear that.")
+    print("Sorry to hear that.")
 end
 
 var percent = score / total_questions * 100
