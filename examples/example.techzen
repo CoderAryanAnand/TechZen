@@ -20,6 +20,8 @@ fun q1 ()
     end
 end
 
+var score = 0
+
 if answer == "yes" then
     var score = q1()
 else
