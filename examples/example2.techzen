@@ -7,7 +7,7 @@ class Person
     fun Format()
         return "My name is " + this.name + "."
     endf
-end
+endc
 
 var inp = input("name: ")
 while inp != "exit" then
