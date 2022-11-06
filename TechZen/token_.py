@@ -86,6 +86,7 @@ class Keywords(Enum):
     KW_THEN = "THEN"
     KW_END = "END"
     KW_ENDF = "ENDF"
+    KW_ENDC = "ENDC"
     KW_RETURN = "RETURN"
     KW_CONTINUE = "CONTINUE"
     KW_BREAK = "BREAK"
@@ -114,6 +115,7 @@ KEYWORDS = {
     Keywords.KW_THEN.value: Keywords.KW_THEN,
     Keywords.KW_END.value: Keywords.KW_END,
     Keywords.KW_ENDF.value: Keywords.KW_ENDF,
+    Keywords.KW_ENDC.value: Keywords.KW_ENDC,
     Keywords.KW_RETURN.value: Keywords.KW_RETURN,
     Keywords.KW_CONTINUE.value: Keywords.KW_CONTINUE,
     Keywords.KW_BREAK.value: Keywords.KW_BREAK,

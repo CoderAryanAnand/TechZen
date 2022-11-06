@@ -1119,12 +1119,12 @@ class Parser:
         if res.error:
             return res
 
-        if not self.current_token.matches(TokenType.TT_KEYWORD, Keywords.KW_END.value):
+        if not self.current_token.matches(TokenType.TT_KEYWORD, Keywords.KW_ENDC.value):
             return res.failure(
                 InvalidSyntaxError(
                     self.current_token.pos_start,
                     self.current_token.pos_end,
-                    "Expected 'END'",
+                    "Expected 'ENDC'",
                 )
             )
 
