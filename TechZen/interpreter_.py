@@ -613,9 +613,12 @@ class Interpreter:
 
         func_tokens = []
         switch = False
+        switch_class = False
 
         for token in tokens:
-            if str(token) == "KEYWORD:fun":
+            if str(token) == "KEYWORD:class":
+                switch_class = True
+            if str(token) == "KEYWORD:fun" and not switch_class:
                 switch = True
 
             if switch:
@@ -624,6 +627,16 @@ class Interpreter:
             if str(token) == "KEYWORD:endf":
                 switch = False
 
+            if str(token) == "KEYWORD:endc":
+                switch_class = False
+
+        for token in tokens:
+            if str(token) == "KEYWORD:class":
+                switch = True
+            if switch:
+                func_tokens.append(token)
+            if str(token) == "KEYWORD:endc":
+                switch = False
             if str(token) == "EOF":
                 func_tokens.append(token)
 
