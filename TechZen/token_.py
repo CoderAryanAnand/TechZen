@@ -85,12 +85,14 @@ class Keywords(Enum):
     KW_FUN = "FUN"
     KW_THEN = "THEN"
     KW_END = "END"
+    KW_ENDF = "ENDF"
     KW_RETURN = "RETURN"
     KW_CONTINUE = "CONTINUE"
     KW_BREAK = "BREAK"
     KW_CLASS = "CLASS"
     KW_TRY = "TRY"
     KW_EXCEPT = "EXCEPT"
+    KW_INCLUDE = "INCLUDE"
 
     def __str__(self):
         return str(self.value)
@@ -111,12 +113,14 @@ KEYWORDS = {
     Keywords.KW_FUN.value: Keywords.KW_FUN,
     Keywords.KW_THEN.value: Keywords.KW_THEN,
     Keywords.KW_END.value: Keywords.KW_END,
+    Keywords.KW_ENDF.value: Keywords.KW_ENDF,
     Keywords.KW_RETURN.value: Keywords.KW_RETURN,
     Keywords.KW_CONTINUE.value: Keywords.KW_CONTINUE,
     Keywords.KW_BREAK.value: Keywords.KW_BREAK,
     Keywords.KW_CLASS.value: Keywords.KW_CLASS,
     Keywords.KW_TRY.value: Keywords.KW_TRY,
     Keywords.KW_EXCEPT.value: Keywords.KW_EXCEPT,
+    Keywords.KW_INCLUDE.value: Keywords.KW_INCLUDE,
 }
 
 
