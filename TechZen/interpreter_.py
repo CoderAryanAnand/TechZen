@@ -46,8 +46,8 @@ class Interpreter:
         """
         return RTResult().success(
             Number(node.token.value)
-            .set_context(context)
-            .set_pos(node.pos_start, node.pos_end)
+                .set_context(context)
+                .set_pos(node.pos_start, node.pos_end)
         )
 
     @classmethod
@@ -62,8 +62,8 @@ class Interpreter:
 
         return RTResult().success(
             String(node.token.value)
-            .set_context(context)
-            .set_pos(node.pos_start, node.pos_end)
+                .set_context(context)
+                .set_pos(node.pos_start, node.pos_end)
         )
 
     @classmethod
@@ -375,9 +375,9 @@ class Interpreter:
 
             value = res.register(cls.visit(node.body_node, context))
             if (
-                res.should_return()
-                and res.loop_should_continue is False
-                and res.loop_should_break is False
+                    res.should_return()
+                    and res.loop_should_continue is False
+                    and res.loop_should_break is False
             ):
                 return res
 
@@ -393,8 +393,8 @@ class Interpreter:
             Number.null
             if node.should_return_null
             else List(elements)
-            .set_context(context)
-            .set_pos(node.pos_start, node.pos_end)
+                .set_context(context)
+                .set_pos(node.pos_start, node.pos_end)
         )
 
     @classmethod
@@ -418,9 +418,9 @@ class Interpreter:
 
             value = res.register(cls.visit(node.body_node, context))
             if (
-                res.should_return()
-                and res.loop_should_continue is False
-                and res.loop_should_break is False
+                    res.should_return()
+                    and res.loop_should_continue is False
+                    and res.loop_should_break is False
             ):
                 return res
 
@@ -436,8 +436,8 @@ class Interpreter:
             Number.null
             if node.should_return_null
             else List(elements)
-            .set_context(context)
-            .set_pos(node.pos_start, node.pos_end)
+                .set_context(context)
+                .set_pos(node.pos_start, node.pos_end)
         )
 
     @classmethod
@@ -457,8 +457,8 @@ class Interpreter:
         arg_names = [arg_name.value for arg_name in node.arg_name_tokens]
         func_value = (
             Function(func_name, body_node, arg_names, node.should_auto_return)
-            .set_context(context)
-            .set_pos(node.pos_start, node.pos_end)
+                .set_context(context)
+                .set_pos(node.pos_start, node.pos_end)
         )
 
         if node.var_name_token:
@@ -492,8 +492,8 @@ class Interpreter:
             return res
         return_value = (
             return_value.copy()
-            .set_pos(node.pos_start, node.pos_end)
-            .set_context(context)
+                .set_pos(node.pos_start, node.pos_end)
+                .set_context(context)
         )
         return res.success(return_value)
 
@@ -555,8 +555,8 @@ class Interpreter:
 
         cls_ = (
             Class(node.class_name_token.value, ctx.symbol_table)
-            .set_context(context)
-            .set_pos(node.pos_start, node.pos_end)
+                .set_context(context)
+                .set_pos(node.pos_start, node.pos_end)
         )
         context.symbol_table.set(node.class_name_token.value, cls_)
         return res.success(cls_)
@@ -576,4 +576,66 @@ class Interpreter:
             _ = res.register(cls.visit(node.except_statements, context))
             if res.should_return():
                 return res
+        return res.success(Number.null)
+
+    @classmethod
+    def visit_IncludeNode(cls, node, context):
+        """
+        IncludeNode method
+        :param node: Parsed node
+        :param context: Context object
+        :return: Runtime result success
+        """
+        res = RTResult()
+        from TechZen.global_symbol_table_ import global_symbol_table
+        from TechZen.parser_ import Parser
+        from TechZen.lexer_ import Lexer
+
+        fn = str(node.file_name)[7:]
+
+        try:
+            with open(fn, "r") as f:
+                script = f.read()
+        except Exception as e:
+            return RTResult().failure(
+                RTError(
+                    node.pos_start,
+                    node.pos_end,
+                    f'Failed to load script "{fn}"\n{e}',
+                    context,
+                )
+            )
+
+        lexer = Lexer(str(fn), script)
+        tokens, error = lexer.make_tokens()
+        if error:
+            return None, error, False
+
+        func_tokens = []
+        switch = False
+
+        for token in tokens:
+            if str(token) == "KEYWORD:fun":
+                switch = True
+
+            if switch:
+                func_tokens.append(token)
+
+            if str(token) == "KEYWORD:endf":
+                switch = False
+
+            if str(token) == "EOF":
+                func_tokens.append(token)
+
+        # Generate Abstract Syntax Tree (AST)
+        parser = Parser(func_tokens)
+        ast = parser.parse()
+        if ast.error:
+            return None, ast.error, False
+
+        interpreter = Interpreter()
+        context = Context("<program>")
+        context.symbol_table = global_symbol_table
+        result = interpreter.visit(ast.node, context)
+
         return res.success(Number.null)
