@@ -64,6 +64,8 @@ func-def	: KEYWORD:FUN IDENTIFIER?
 class-expr  : KEYWORD:CLASS IDENTIFIER
             : NEWLINE statements KEYWORD:END
 
+incl-expr   : KEYWORD:INCLUDE expr
+
 try-expr    : KEYWORD:TRY NEWLINE
             : statements
             : KEYWORD:EXCEPT
