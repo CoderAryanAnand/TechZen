@@ -3,10 +3,10 @@ var a = 1
 class Person
     fun Person(name)
         var this.name = name
-    end
+    endf
     fun Format()
         return "My name is " + this.name + "."
-    end
+    endf
 end
 
 var inp = input("name: ")
