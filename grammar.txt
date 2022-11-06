@@ -59,10 +59,10 @@ while-expr  : KEYWORD:WHILE expr KEYWORD:THEN
 func-def	: KEYWORD:FUN IDENTIFIER?
 			  LPAREN (IDENTIFIER (COMMA IDENTIFIER)*)? RPAREN
 			  (ARROW expr)
-            | (NEWLINE statements KEYWORD:END)
+            | (NEWLINE statements KEYWORD:ENDF)
 
 class-expr  : KEYWORD:CLASS IDENTIFIER
-            : NEWLINE statements KEYWORD:END
+            : NEWLINE statements KEYWORD:ENDC
 
 incl-expr   : KEYWORD:INCLUDE expr
 
