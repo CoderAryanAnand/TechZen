@@ -30,6 +30,7 @@ TechZen is a dynamically typed language, similar to [BASIC](https://en.wikipedia
     - Built-in Functions
 - Classes
     - Instances
+- Include functions and classes from other files
 - Errors
     - Illegal character
     - Expected character
@@ -42,8 +43,7 @@ You only need Python 3.
 
 ## Installation
 
-Install the dependencies and devDependencies and start the server.
-
+You just have to clone this repository.
 ```sh
 git clone https://github.com/CoderAryanAnand/TechZen.git
 ```
@@ -59,9 +59,9 @@ If you have a question or a minor problem, just open an issue. If you have major
 
 ## TODO
 
+- [ ] Include/import expression
 - [x] Classes
 - [x] Try statement
-- [x] Docstrings for all functions and classes
 
 >This list will always stay at three elements. These are always the latest todos.
 
