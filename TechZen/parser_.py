@@ -18,6 +18,7 @@ from TechZen.nodes_ import (
     BreakNode,
     ClassNode,
     TryNode,
+    IncludeNode,
 )
 from TechZen.token_ import TokenType, Keywords
 
@@ -556,6 +557,12 @@ class Parser:
             if res.error:
                 return res
             return res.success(try_expr)
+
+        elif token.matches(TokenType.TT_KEYWORD, Keywords.KW_INCLUDE.value):
+            include_expr = res.register(self.include_expr())
+            if res.error:
+                return res
+            return res.success(include_expr)
 
         return res.failure(
             InvalidSyntaxError(
@@ -1242,12 +1249,12 @@ class Parser:
         if res.error:
             return res
 
-        if not self.current_token.matches(TokenType.TT_KEYWORD, Keywords.KW_END.value):
+        if not self.current_token.matches(TokenType.TT_KEYWORD, Keywords.KW_ENDF.value):
             return res.failure(
                 InvalidSyntaxError(
                     self.current_token.pos_start,
                     self.current_token.pos_end,
-                    "Expected 'END'",
+                    "Expected 'ENDF'",
                 )
             )
 
@@ -1342,6 +1349,38 @@ class Parser:
                 try_statements, except_statements, pos_start, self.current_token.pos_end
             )
         )
+
+    def include_expr(self):
+        """
+        Parses the import/include expression.
+        :return: Parse result
+        """
+        res = ParseResult()
+        pos_start = self.current_token.pos_start
+
+        if self.current_token.matches(TokenType.TT_KEYWORD, Keywords.KW_INCLUDE.value):
+            res.register_advancement()
+            self.advance()
+
+            if self.current_token.type != TokenType.TT_STRING:
+                return res.failure(
+                    InvalidSyntaxError(
+                        self.current_token.pos_start,
+                        self.current_token.pos_end,
+                        "Expected string",
+                    )
+                )
+
+            file_name = self.current_token
+            res.register_advancement()
+            self.advance()
+            if res.error:
+                return res
+            return res.success(
+                IncludeNode(
+                    file_name, pos_start, self.current_token.pos_end
+                )
+            )
 
     ###################################
 
