@@ -331,3 +331,12 @@ class TryNode:
         self.pos_end = pos_end
 
         self.child = None
+
+
+class IncludeNode:
+    def __init__(self, file_name, pos_start, pos_end):
+        self.file_name = file_name
+        self.pos_start = pos_start
+        self.pos_end = pos_end
+
+        self.child = None
