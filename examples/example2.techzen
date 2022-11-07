@@ -9,6 +9,8 @@ class Person
     endf
 endc
 
+fun add(a, b) -> a + b
+
 var inp = input("name: ")
 while inp != "exit" then
 	var p = Person(inp)
