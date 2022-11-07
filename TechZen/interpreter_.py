@@ -613,6 +613,7 @@ class Interpreter:
 
         func_tokens = []
         switch = False
+        switch_arrow = False
         switch_class = False
 
         for token in tokens:
@@ -621,10 +622,16 @@ class Interpreter:
             if str(token) == "KEYWORD:fun" and not switch_class:
                 switch = True
 
+            if str(token) == "ARROW" and not switch_class:
+                switch_arrow = True
+
             if switch:
                 func_tokens.append(token)
 
-            if str(token) == "KEYWORD:endf":
+            if str(token) == "NEWLINE" and switch_arrow:
+                switch = False
+
+            if str(token) == "KEYWORD:endf" and not switch_arrow:
                 switch = False
 
             if str(token) == "KEYWORD:endc":
