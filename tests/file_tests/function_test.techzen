@@ -7,12 +7,12 @@ print(res)
 fun subtract(a, b)
     var res = a - b
     return res
-end
+endf
 
 print(subtract(2,1))
 
 fun hi()
 print("hi")
-end
+endf
 
 hi()

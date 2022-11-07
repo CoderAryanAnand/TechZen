@@ -1,11 +1,11 @@
 class Person
     fun Person(name)
         VAR this.name = name
-    end
+    endf
     fun Format()
         RETURN "My name is " + this.name + "."
-    end
-end
+    endf
+endc
 
 var me = Person("person_name")
 var s = me.Format()

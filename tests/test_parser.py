@@ -126,7 +126,7 @@ class TestParser(unittest.TestCase):
         node = (
             Parser(
                 Lexer(
-                    "<stdin>", "class a; fun a(b); print(b); end; end;"
+                    "<stdin>", "class a; fun a(b); print(b); endf; endc;"
                 ).make_tokens()[0]
             )
             .parse()
