@@ -1377,9 +1377,7 @@ class Parser:
             if res.error:
                 return res
             return res.success(
-                IncludeNode(
-                    file_name, pos_start, self.current_token.pos_end
-                )
+                IncludeNode(file_name, pos_start, self.current_token.pos_end)
             )
 
     ###################################

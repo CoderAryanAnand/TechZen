@@ -46,8 +46,8 @@ class Interpreter:
         """
         return RTResult().success(
             Number(node.token.value)
-                .set_context(context)
-                .set_pos(node.pos_start, node.pos_end)
+            .set_context(context)
+            .set_pos(node.pos_start, node.pos_end)
         )
 
     @classmethod
@@ -62,8 +62,8 @@ class Interpreter:
 
         return RTResult().success(
             String(node.token.value)
-                .set_context(context)
-                .set_pos(node.pos_start, node.pos_end)
+            .set_context(context)
+            .set_pos(node.pos_start, node.pos_end)
         )
 
     @classmethod
@@ -375,9 +375,9 @@ class Interpreter:
 
             value = res.register(cls.visit(node.body_node, context))
             if (
-                    res.should_return()
-                    and res.loop_should_continue is False
-                    and res.loop_should_break is False
+                res.should_return()
+                and res.loop_should_continue is False
+                and res.loop_should_break is False
             ):
                 return res
 
@@ -393,8 +393,8 @@ class Interpreter:
             Number.null
             if node.should_return_null
             else List(elements)
-                .set_context(context)
-                .set_pos(node.pos_start, node.pos_end)
+            .set_context(context)
+            .set_pos(node.pos_start, node.pos_end)
         )
 
     @classmethod
@@ -418,9 +418,9 @@ class Interpreter:
 
             value = res.register(cls.visit(node.body_node, context))
             if (
-                    res.should_return()
-                    and res.loop_should_continue is False
-                    and res.loop_should_break is False
+                res.should_return()
+                and res.loop_should_continue is False
+                and res.loop_should_break is False
             ):
                 return res
 
@@ -436,8 +436,8 @@ class Interpreter:
             Number.null
             if node.should_return_null
             else List(elements)
-                .set_context(context)
-                .set_pos(node.pos_start, node.pos_end)
+            .set_context(context)
+            .set_pos(node.pos_start, node.pos_end)
         )
 
     @classmethod
@@ -457,8 +457,8 @@ class Interpreter:
         arg_names = [arg_name.value for arg_name in node.arg_name_tokens]
         func_value = (
             Function(func_name, body_node, arg_names, node.should_auto_return)
-                .set_context(context)
-                .set_pos(node.pos_start, node.pos_end)
+            .set_context(context)
+            .set_pos(node.pos_start, node.pos_end)
         )
 
         if node.var_name_token:
@@ -492,8 +492,8 @@ class Interpreter:
             return res
         return_value = (
             return_value.copy()
-                .set_pos(node.pos_start, node.pos_end)
-                .set_context(context)
+            .set_pos(node.pos_start, node.pos_end)
+            .set_context(context)
         )
         return res.success(return_value)
 
@@ -555,8 +555,8 @@ class Interpreter:
 
         cls_ = (
             Class(node.class_name_token.value, ctx.symbol_table)
-                .set_context(context)
-                .set_pos(node.pos_start, node.pos_end)
+            .set_context(context)
+            .set_pos(node.pos_start, node.pos_end)
         )
         context.symbol_table.set(node.class_name_token.value, cls_)
         return res.success(cls_)
