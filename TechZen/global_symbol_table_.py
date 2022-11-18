@@ -24,6 +24,7 @@ BuiltInFunction.update_list = BuiltInFunction("update_list")
 BuiltInFunction.lower_string = BuiltInFunction("lower")
 BuiltInFunction.upper_string = BuiltInFunction("upper")
 BuiltInFunction.string = BuiltInFunction("string")
+BuiltInFunction.int = BuiltInFunction("int")
 BuiltInFunction.exit = BuiltInFunction("exit")
 
 
@@ -50,4 +51,5 @@ global_symbol_table.set("update_list", BuiltInFunction.update_list)
 global_symbol_table.set("lower_string", BuiltInFunction.lower_string)
 global_symbol_table.set("upper_string", BuiltInFunction.upper_string)
 global_symbol_table.set("string", BuiltInFunction.string)
+global_symbol_table.set("int", BuiltInFunction.int)
 global_symbol_table.set("exit", BuiltInFunction.exit)

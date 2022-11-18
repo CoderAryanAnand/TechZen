@@ -385,6 +385,33 @@ class BuiltInFunction(BaseFunction):
 
     execute_string.arg_names = ["value"]
 
+    def execute_int(self, exec_ctx):
+        """
+        Built-in make string function.
+        :param exec_ctx: Context for symbol table
+        :return: Runtime result
+        """
+        string_ = exec_ctx.symbol_table.get("value")
+
+        if not isinstance(string_, String):
+            return RTResult().failure(
+                RTError(
+                    self.pos_start, self.pos_end, "Argument must be string", exec_ctx
+                )
+            )
+
+        try:
+            _ = int(str(string_))
+        except ValueError:
+            return RTResult().failure(
+                RTError(
+                    self.pos_start, self.pos_end, "Argument must be number in string", exec_ctx
+                )
+            )
+        return RTResult().success(Number(int(str(string_.value))))
+
+    execute_int.arg_names = ["value"]
+
     def execute_run(self, exec_ctx):
         """
         Built-in run file function.
@@ -462,4 +489,5 @@ BuiltInFunction.update_list = BuiltInFunction("update_list")
 BuiltInFunction.lower_string = BuiltInFunction("lower")
 BuiltInFunction.upper_string = BuiltInFunction("upper")
 BuiltInFunction.string = BuiltInFunction("string")
+BuiltInFunction.int = BuiltInFunction("int")
 BuiltInFunction.exit = BuiltInFunction("exit")
