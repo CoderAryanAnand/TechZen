@@ -1,0 +1,19 @@
+fun factorial(num)
+    if num == 0 then
+        return 1
+    end
+    if num == 1 then
+        return 1
+    end
+    return num * factorial(num - 1)
+endf
+
+fun abs(num)
+    if num <= 0 then
+        return -1(num)
+    end
+    return num
+endf
+
+var n = input("n: ")
+print(abs(int(n)))
