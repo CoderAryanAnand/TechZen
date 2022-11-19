@@ -1,6 +1,6 @@
 from TechZen.runtime_ import RTResult
 from TechZen.errors_ import RTError
-from TechZen.token_ import TokenType, Keywords
+from TechZen.token_ import TokenType, Keywords, Token
 from TechZen.context_ import Context
 from TechZen.symbol_table_ import SymbolTable
 from TechZen.types.number_ import Number
@@ -593,6 +593,12 @@ class Interpreter:
 
         fn = str(node.file_name)[7:]
 
+        import os
+
+        if fn == "std.math":
+            fn = r"{}\std\math.techzen".format(os.getcwd())
+        fn = fn.replace('\\', "/")
+
         try:
             with open(fn, "r") as f:
                 script = f.read()
@@ -619,6 +625,7 @@ class Interpreter:
         for token in tokens:
             if str(token) == "KEYWORD:class":
                 switch_class = True
+
             if str(token) == "KEYWORD:fun" and not switch_class:
                 switch = True
 
@@ -630,8 +637,10 @@ class Interpreter:
 
             if str(token) == "NEWLINE" and switch_arrow:
                 switch = False
+                switch_arrow = False
 
-            if str(token) == "KEYWORD:endf" and not switch_arrow:
+            if str(token) == "KEYWORD:endf" and not switch_arrow and not switch_class:
+                func_tokens.append(Token(TokenType.TT_NEWLINE))
                 switch = False
 
             if str(token) == "KEYWORD:endc":

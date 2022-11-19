@@ -1,6 +1,10 @@
-include "C:/Users/aryan/OneDrive/Documents/GitHub/TechZen/examples/example2.techzen"
+include "C:/Users/aryan/PycharmProjects/TechzenLanguage/examples/example2.techzen"
+include "std.math"
 
 var res = add(1,2)
+print(res)
+
+var res = factorial(5)
 print(res)
 
 var a = 1
