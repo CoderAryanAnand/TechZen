@@ -138,7 +138,7 @@ class Interpreter:
                     node.pos_start,
                     node.pos_end,
                     f"'{var_name}' is not defined",
-                    context,
+                    context
                 )
             )
 
@@ -149,7 +149,7 @@ class Interpreter:
                         node.pos_start,
                         node.pos_end,
                         "Value must be instance of class or class",
-                        context,
+                        context
                     )
                 )
 
@@ -190,7 +190,7 @@ class Interpreter:
                         node.pos_start,
                         node.pos_end,
                         f"'{var_name}' not defined",
-                        context,
+                        context
                     )
                 )
 
@@ -203,7 +203,7 @@ class Interpreter:
                             node.pos_start,
                             node.pos_end,
                             "Value must be instance of class or class",
-                            context,
+                            context
                         )
                     )
 
@@ -220,7 +220,7 @@ class Interpreter:
                             node.pos_start,
                             node.pos_end,
                             f"'{name}' not defined",
-                            context,
+                            context
                         )
                     )
 
@@ -602,7 +602,7 @@ class Interpreter:
                     node.pos_start,
                     node.pos_end,
                     f'Failed to load script "{fn}"\n{e}',
-                    context,
+                    context
                 )
             )
 
