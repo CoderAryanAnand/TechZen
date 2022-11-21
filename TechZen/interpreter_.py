@@ -595,8 +595,10 @@ class Interpreter:
 
         import os
 
-        if fn == "std.math":
-            fn = r"{}\std\math.techzen".format(os.getcwd())
+        if "std" in fn:
+            fn = fn.replace("std.", "")
+            fn = r"{}\std\{}.techzen".format(os.getcwd(), fn)
+
         fn = fn.replace('\\', "/")
 
         try:
